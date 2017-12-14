@@ -20,7 +20,7 @@ CREATE TABLE teams (
   city_id INTEGER REFERENCES cities
 );
 
-CREATE TABLE teams_colors (
+CREATE TABLE team_colors (
   id SERIAL PRIMARY KEY,
   team_id INTEGER REFERENCES teams,
   color_id INTEGER REFERENCES colors

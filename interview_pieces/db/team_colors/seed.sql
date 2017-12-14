@@ -26,7 +26,7 @@ INSERT INTO teams (name, city_id, mascot) VALUES
   ('Athletics', 2, 'Stomper')
 ;
 
-INSERT INTO teams_colors (team_id, color_id) VALUES
+INSERT INTO team_colors (team_id, color_id) VALUES
   (2, 1),
   (2, 2),
   (3, 3),
