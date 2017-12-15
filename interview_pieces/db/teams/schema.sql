@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS team_colors;
-CREATE DATABASE team_colors;
-
-\c team_colors
+DROP TABLE IF EXISTS teams_colors;
+DROP TABLE IF EXISTS teams;
+DROP TABLE IF EXISTS colors;
+DROP TABLE IF EXISTS cities;
 
 CREATE TABLE cities (
   id SERIAL PRIMARY KEY,
@@ -20,7 +20,7 @@ CREATE TABLE teams (
   city_id INTEGER REFERENCES cities
 );
 
-CREATE TABLE team_colors (
+CREATE TABLE teams_colors (
   id SERIAL PRIMARY KEY,
   team_id INTEGER REFERENCES teams,
   color_id INTEGER REFERENCES colors

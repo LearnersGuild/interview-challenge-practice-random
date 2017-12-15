@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS movie_genres;
-CREATE DATABASE movie_genres;
-
-\c movie_genres
+DROP TABLE IF EXISTS movies_genres;
+DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS genres;
+DROP TABLE IF EXISTS languages;
 
 CREATE TABLE languages (
   id INTEGER PRIMARY KEY,

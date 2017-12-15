@@ -1,27 +1,26 @@
-DROP DATABASE IF EXISTS team_colors;
-CREATE DATABASE team_colors;
+DROP TABLE IF EXISTS flights_passengers;
+DROP TABLE IF EXISTS flights;
+DROP TABLE IF EXISTS passengers;
+DROP TABLE IF EXISTS airlines;
 
-\c team_colors
+CREATE TABLE airlines (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(32)
+);
 
-CREATE TABLE cities (
+CREATE TABLE flights (
+  id SERIAL PRIMARY KEY,
+  flight_number VARCHAR(8),
+  airline_id INTEGER REFERENCES airlines
+);
+
+CREATE TABLE passengers (
   id SERIAL PRIMARY KEY,
   name VARCHAR(64)
 );
 
-CREATE TABLE colors (
+CREATE TABLE flights_passengers (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(64)
-);
-
-CREATE TABLE teams (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(64) UNIQUE,
-  mascot VARCHAR(64),
-  city_id INTEGER REFERENCES cities
-);
-
-CREATE TABLE teams_colors (
-  id SERIAL PRIMARY KEY,
-  team_id INTEGER REFERENCES teams,
-  color_id INTEGER REFERENCES colors
+  flight_id INTEGER REFERENCES flights,
+  passenger_id INTEGER REFERENCES passengers
 );
