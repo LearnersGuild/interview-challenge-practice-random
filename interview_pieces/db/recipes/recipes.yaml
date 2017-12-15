@@ -1,0 +1,157 @@
+%YAML 1.2
+---
+tables:
+  one:
+    tablename: types
+    columns:
+      - name: id
+        type: SERIAL
+        options: PRIMARY KEY
+      - name: name
+        type: VARCHAR(64)
+        options: UNIQUE
+    data: 
+      - name: cake
+      - name: cookies
+      - name: bars
+  main:
+    tablename: recipes
+    columns:
+      - name: id
+        type: SERIAL
+        options: PRIMARY KEY
+      - name: name
+        type: VARCHAR(64)
+        options: UNIQUE
+      - name: type_id
+        type: INTEGER
+        options: REFERENCES types
+    data: 
+      - name: chocolate chip cookies
+        type_id: 2
+      - name: pound cake
+        type_id: 1
+      - name: chocolate brownie
+        type_id: 3 
+
+  many:
+    tablename: ingredients
+    columns:
+      - name: id
+        type: SERIAL
+        options: PRIMARY KEY
+      - name: name
+        type: VARCHAR(64)
+        options: UNIQUE
+    data: 
+      - name: flour
+      - name: sugar
+      - name: vanilla extract
+      - name: chocolate chips
+      - name: butter
+      - name: salt
+      - name: baking soda
+      - name: brown sugar
+      - name: eggs
+
+  join:
+    tablename: recipes_ingredients
+    columns:
+      - name: id
+        type: SERIAL
+        options: PRIMARY KEY
+      - name: recipe_id
+        type: INTEGER
+        options: REFERENCES recipes
+      - name: ingredient_id
+        type: INTEGER
+        options: REFERENCES ingredients
+      - name: amount
+        type: FLOAT
+      - name: amount_units
+        type: VARCHAR(8)
+    data: 
+      - recipe_id: 1
+        ingredient_id: 1
+        amount: 2.25
+        amount_units: cups
+      - recipe_id: 1
+        ingredient_id: 2
+        amount: 1
+        amount_units: tsp
+      - recipe_id: 1
+        ingredient_id: 6
+        amount: 1
+        amount_units: tsp
+      - recipe_id: 1
+        ingredient_id: 5
+        amount: 1
+        amount_units: cup
+      - recipe_id: 1
+        ingredient_id: 8
+        amount: 0.75
+        amount_units: cup
+      - recipe_id: 1
+        ingredient_id: 2
+        amount: 0.75
+        amount_units: cup
+      - recipe_id: 1
+        ingredient_id: 6
+        amount: 1
+        amount_units: tsp
+      - recipe_id: 1
+        ingredient_id: 9
+        amount: 2
+        amount_units: ""
+      - recipe_id: 1
+        ingredient_id: 3
+        amount: 0.5
+        amount_units: tsps
+      - recipe_id: 2
+        ingredient_id: 5
+        amount: 1
+        amount_units: cup
+      - recipe_id: 2
+        ingredient_id: 1
+        amount: 1
+        amount_units: cups
+      - recipe_id: 2
+        ingredient_id: 2
+        amount: 1
+        amount_units: cup
+      - recipe_id: 2
+        ingredient_id: 9
+        amount: 4
+        amount_units: ""
+      - recipe_id: 2
+        ingredient_id: 3
+        amount: 2
+        amount_units: tsps
+      - recipe_id: 2
+        ingredient_id: 6
+        amount: 0.5
+        amount_units: tsps
+      - recipe_id: 3
+        ingredient_id: 4
+        amount: 1.5
+        amount_units: cups
+      - recipe_id: 3
+        ingredient_id: 5
+        amount: 2
+        amount_units: tbs
+      - recipe_id: 3
+        ingredient_id: 2
+        amount: 0.5
+        amount_units: cups
+      - recipe_id: 3
+        ingredient_id: 1
+        amount: 0.67
+        amount_units: cups
+      - recipe_id: 3
+        ingredient_id: 7
+        amount: 0.25
+        amount_units: tsps
+      - recipe_id: 3
+        ingredient_id: 6
+        amount: 0.5
+        amount_units: tsps
