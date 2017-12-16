@@ -11,7 +11,7 @@ tables:
         type: VARCHAR(64)
         options: UNIQUE
     data: 
-      - name: Fly Right Airlines
+      - name: Fly Right Sister Airlines
       - name: Busy Bee Air
       - name: Learners Guild Charter Flights
  
