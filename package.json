@@ -1,0 +1,12 @@
+{
+  "name": "interview-challenge-practice-random",
+  "version": "1.0.0",
+  "author": "Bonnie Schulkin",
+  "scripts": {
+    "test": "export NODE_ENV=test && mocha"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "mustache": "^2.3.0"
+  }
+}
