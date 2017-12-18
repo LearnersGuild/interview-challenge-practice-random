@@ -23,9 +23,38 @@ Next, we need to setup the challenge. You can do so by simply running a script:
 cd setup && npm run setup && cd ..
 ```
 
-{{> challenge-description}}
+## The Interview Challenge
+
+This challenge has three parts:
+
+- Part 1: {{ description.part1 }}
+- Part 2: {{ description.part2 }}
+- Part 3: {{ description.part3 }}
+
+### Part 1: SQL
+
+##### PostgreSQL, Node.js, & pg-promise
+
+#### ER Diagram
+
+An ER diagram has been provided that visualizes the database schema:
+
+![ER Diagram](/part-1/{{ dbName }}_ERD.png)
+
 {{> part-1}}
+
+### Part 2: Express
+
 {{> part-2}}
+
+##### Starting the server
+
+To start the server, run: `npm start`.
+
+### Part 3: Front-End
+
+##### DOM Manipulation
+
 {{> part-3}}
 
 ## Teardown
