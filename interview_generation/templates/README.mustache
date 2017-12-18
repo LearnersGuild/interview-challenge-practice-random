@@ -1,0 +1,42 @@
+# Foundations -> Practice Challenge
+
+## Introduction
+
+This document contains the requirements for completing your interview challenge as well as instructions for setup and teardown. Read the following content carefully!
+
+### Setup
+
+#### Completed by your interviewer:
+
+- `npm install`
+
+#### For you to complete:
+First, we'll need to navigate to the directory on the interview USB drive where the challenge files are. On a mac, you'll find it here:
+
+```sh
+cd "/Volumes/INTERVIEWDRIVE/[YOUR DIRECTORY NAME]"
+```
+
+Next, we need to setup the challenge. You can do so by simply running a script:
+
+```sh
+cd setup && npm run setup && cd ..
+```
+
+{{> challenge-description}}
+{{> part-1}}
+{{> part-2}}
+{{> part-3}}
+
+## Teardown
+
+Let's do a little cleanup:
+
+1. End the video recording (if applicable)
+2. From your terminal, stop any running express servers
+3. From your terminal, `cd` out of the usb drive directory
+4. Quit your terminal application
+5. Quit your text editor application
+6. Close any browser windows pertaining to the challenge
+7. Remove the `Postico` entry for the database connection (if applicable)
+8. Eject the USB drive (`diskutil unmount INTERVIEWDRIVE`)
