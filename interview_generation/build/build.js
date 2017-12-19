@@ -16,6 +16,8 @@ if (process.argv.length < 3) {
 }
 
 const learnerName = process.argv.slice(2).join(' ')
+const driveName = 'INTERVIEWDRIVE'
+const outputDir = `/Volumes/${driveName}/${learnerName}`
 
 /**
  * 
@@ -51,7 +53,8 @@ const p3version = 'a'
 const dbName = 'recipes'
 
 const finalData = {
-  learnerName,
+  driveName,
+  outputDir,
   dbName,
   p1version,
   p2version,
