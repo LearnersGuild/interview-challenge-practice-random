@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "author": "Bonnie Schulkin",
   "scripts": {
-    "test": "export NODE_ENV=test && mocha"
+    "build": "node build.js"
   },
   "devDependencies": {},
   "dependencies": {
+    "dateformat": "^3.0.2",
+    "fs-extra": "^5.0.0",
     "mustache": "^2.3.0"
   }
 }

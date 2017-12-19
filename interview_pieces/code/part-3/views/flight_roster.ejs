@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Version 2 Challenge Part 3</title>
+  <link rel="stylesheet" href="/flight_roster.css">
+</head>
+
+<body>
+  <h1>Passengers on Flight <%= flightNumber %> </h1>
+  <button id="eject-passenger">Give passenger a parachute</button>
+  <div id="message">
+    <p>
+      <% if (locals.message) { %>
+        <%= message %>
+      <% } %>
+      </p>
+  </div>
+  <table class="flight-passengers">
+    <tr>
+      <th>Passenger Name</th>
+    </tr>
+    <% if (locals.passengers) { %>
+      <% for (var passenger of passengers) { %>
+        <tr class="passenger">
+          <td>
+            <%= passenger.name %>
+          </td>
+        </tr>
+      <% } %>
+    <% } %>
+  </table>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <script src="/flight_roster.js"></script>
+</body>
+
+</html>

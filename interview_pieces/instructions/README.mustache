@@ -14,7 +14,7 @@ This document contains the requirements for completing your interview challenge 
 First, we'll need to navigate to the directory on the interview USB drive where the challenge files are. On a mac, you'll find it here:
 
 ```sh
-cd "{{ outputDir }}"
+cd "{{{ outputDir }}}"
 ```
 
 Next, we need to setup the challenge. You can do so by simply running a script:
@@ -67,5 +67,5 @@ Let's do a little cleanup:
 4. Quit your terminal application
 5. Quit your text editor application
 6. Close any browser windows pertaining to the challenge
-7. Remove the `Postico` entry for the database connection (if applicable)
-8. Eject the USB drive (`diskutil unmount {{ driveName }}`)
+7. `dropdb {{ dbName }}`
+8. Eject the USB drive (`diskutil unmount {{ drivePath }}`)

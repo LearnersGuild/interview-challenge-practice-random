@@ -1,0 +1,16 @@
+table.flight-passengers {
+  border-collapse: collapse;
+}
+
+table.flight-passengers th, table.flight-passengers td {
+  border: 1px solid black;
+  padding: 3px;
+}
+
+div.total-flights {
+  margin-top: 10px;
+}
+
+.light-gray {
+  background-color: #eee;
+}
