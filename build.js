@@ -12,6 +12,31 @@ const learnerName = process.argv.slice(2).join(' ')
 /* Functions ************************************************/
 
 /**
+ * Print error details and exit
+ * @param {Error} error - error object
+ * @param {string} message - message for error context
+ */
+const fatalError = (error, message) => {
+    console.error(message)
+    console.error(error.toString())
+    console.error('Exiting.')
+    process.exit(1)
+}
+
+/**
+ * Read YAML from a file and return an object
+ * @param {string} filePath - path to file containing YAML
+ * @returns {object} - JS object represenation of YAML
+ */
+const readYaml = (filePath) => {
+  try {
+    return yaml.safeLoad(fs.readFileSync(filePath))
+  } catch (error) {
+    fatalError(error, `Problem reading YAML from ${filePath}`)
+  }
+}
+
+/**
  * Create the output directory based on learner name and date.
  * If the directory already exists, delete and recreate
  * @param {string} drivePath - path to the interview drive
@@ -30,28 +55,10 @@ const createOutputDir = (drivePath, learnerName) => {
       // the directory already exists; empty it
       fs.emptyDirSync(outputDir)
     } else {
-      console.error(`Could not make output dir ${outputDir}`)
-      console.error(error.toString())
-      process.exit(1)
+      fatalError(error, `Could not make output dir ${outputDir}`)
     }
   }
   return outputDir
-}
-
-/**
- * Read YAML from a file and return an object
- * @param {string} filePath - path to file containing YAML
- * @returns {object} - JS object represenation of YAML
- */
-const readYaml = (filePath) => {
-  try {
-    return yaml.safeLoad(fs.readFileSync(filePath))
-  } catch (error) {
-    console.error(`Problem reading YAML from ${filePath}`)
-    console.error(error.toString())
-    console.error('Exiting.')
-    process.exit(1)
-  }
 }
 
 /**
@@ -62,14 +69,39 @@ const readYaml = (filePath) => {
 const createFile = (filePath, contents) => {
   fs.writeFile(filePath, contents, (err) => {
     if (err) {
-      console.error(`Problem writing ${filePath}`)
-      console.error(err.toString())
-      console.error('Exiting.')
-      process.exit(1)
+      fatalError(err, `Problem writing file ${filePath}`)
     }
     console.log(filePath)
   })
 }
+
+/**
+ * Create a directory
+ * @param {string} dirPath - path to create directory
+ */
+const createDir = (dirPath) => {
+  try {
+    fs.mkdirSync(dirPath)
+  } catch(error) {
+    fatalError(error, `Could not create directory ${dirPath}`)
+  }
+}
+
+/**
+ * Copy a file
+ * @param {string} sourcePath - path to source file
+ * @param {string} destPath - path to destination file
+ */
+const copyFile = (sourcePath, destPath) => {
+  try {
+    fs.copySync(sourcePath, destPath)
+    console.log(destPath)
+  } catch(error) {
+    fatalError(error, `Could not copy ${sourcePath} to ${destPath}`)
+  }
+}
+
+
 /**
  * Render a mustache template with the given data and partials
  * @param {string} templateFilePath - path to main template file
@@ -77,7 +109,6 @@ const createFile = (filePath, contents) => {
  * @param {object} partials         - keys: partial template names. values: partial template paths.
  */
 const renderMustache = (templateFilePath, data, partials) => {
-
   try { 
     const templateString = fs.readFileSync(templateFilePath, 'utf-8')
     const partialStrings = {}
@@ -90,12 +121,8 @@ const renderMustache = (templateFilePath, data, partials) => {
     return mustache.render(templateString, data, partialStrings)
 
   } catch(error) {
-    console.log(`Could not render template ${templateFilePath}:`)
-    console.log(error.toString())
-    console.log('Exiting')
-    process.exit(1)
+    fatalError(error, `Could not render template ${templateFilePath}:`)
   }
-
 }
 
 /**
@@ -119,10 +146,11 @@ const generateRandomVersion = () => {
  * Generate an object with random data matching the random versions
  * @param {string} drivePath - Path to the drive containing interview files
  * @param {string} outputDir - Path to output directory
+ * @param {object} templateData - data for populating templates
  * @param {object} versions - randomized versions for db, p1, p2, p3
  * @returns {object} - Object containing data for the random versions
  */
-const generateRandomData = (drivePath, outputDir, versions) => {
+const generateRandomData = (drivePath, outputDir, templateData, versions) => {
   return {
     drivePath,
     outputDir,
@@ -157,7 +185,7 @@ const createInstructions = (data, piecesDir) => {
 }
 
 /**
- * Create setup directory with the appropriate db datat
+ * Create setup directory with the appropriate db data
  * @param {string} dbName - Name of db for this interview
  * @param {string} piecesDir - Path to the directory containing templates and YAML
  * @param {string} outputDir - Path to the output directory
@@ -165,21 +193,22 @@ const createInstructions = (data, piecesDir) => {
 const createSetup = (dbName, piecesDir, outputDir) => {
   const setupDir = path.join(piecesDir, 'code', 'setup')
   const schemaTemplatePath = path.join(setupDir, 'schema.mustache')
-  const seedTemplatePath = path.join(setupDir, 'seed.mustache')
   
   const setupOutDir = path.join(outputDir, 'setup')
-  fs.mkdirSync(setupOutDir)
+  createDir(setupOutDir)
   const schemaOutPath = path.join(setupOutDir, 'schema.sql')
-  const seedOutPath = path.join(setupOutDir, 'seed.sql')
 
   const dbDir = path.join(piecesDir, 'db_data', dbName)
   const dbConfig = readYaml(path.join(dbDir, `${dbName}.yaml`))
 
-  // why can't I just use Object.values here? 
   const tables = Object.keys(dbConfig.tables).map(key => dbConfig['tables'][key])
-
   const schema = renderMustache(schemaTemplatePath, { dbName, tables }, {})
   createFile(schemaOutPath, schema)
+
+  // too much work to create seed file from yaml. for now, just copy over
+  const seedSourcePath = path.join(piecesDir, 'db_data', dbName, 'seed.sql')
+  const seedDestPath = path.join(setupOutDir, 'seed.sql')
+  copyFile(seedSourcePath, seedDestPath)
 }
 
 /* Main ******************************************************************/
@@ -200,7 +229,7 @@ if (process.argv.length < 3) {
 
 const outputDir = createOutputDir(drivePath, learnerName)
 const versions = generateRandomVersion()
-const randomizedData = generateRandomData(drivePath, outputDir, versions)
+const randomizedData = generateRandomData(drivePath, outputDir, templateData, versions)
 
 createInstructions(randomizedData, piecesDir)
 createSetup(versions.db, piecesDir, outputDir)
