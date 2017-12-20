@@ -9,6 +9,7 @@
   "dependencies": {
     "dateformat": "^3.0.2",
     "fs-extra": "^5.0.0",
+    "js-yaml": "^3.10.0",
     "mustache": "^2.3.0"
   }
 }

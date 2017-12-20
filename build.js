@@ -2,23 +2,10 @@ const util = require('util')
 const exec = require('child_process').exec
 const fs = require('fs-extra')
 const path = require('path')
+const yaml = require('js-yaml')
 const mustache = require('mustache')
 var dateFormat = require('dateformat');
 const templateData = require('./interview_pieces/template_data')
-
-/* Data locations */
-const piecesDir = './interview_pieces'
-const instructionsTemplateDir = path.join(piecesDir, 'instructions')
-// const drivePath = '/Volumes/INTERVIEWDRIVE'
-const drivePath = '/var/tmp/randomInterviews'
-
-/* Argument gathering */
-if (process.argv.length < 3) {
-  console.log(`
-  USAGE: node build.js <learner_name>
-  `)
-  process.exit(1)
-}
 
 const learnerName = process.argv.slice(2).join(' ')
 
@@ -51,6 +38,27 @@ const createOutputDir = (drivePath, learnerName) => {
   return outputDir
 }
 
+/**
+ * Read YAML from a file and return an object
+ * @param {string} filePath - path to file containing YAML
+ * @returns {object} - JS object represenation of YAML
+ */
+const readYaml = (filePath) => {
+  try {
+    return yaml.safeLoad(fs.readFileSync(filePath))
+  } catch (error) {
+    console.error(`Problem reading YAML from ${filePath}`)
+    console.error(error.toString())
+    console.error('Exiting.')
+    process.exit(1)
+  }
+}
+
+/**
+ * Create a file with contents at the specified path
+ * @param {string} filePath - full path to file
+ * @param {string} contents - contents to write to file
+ */
 const createFile = (filePath, contents) => {
   fs.writeFile(filePath, contents, (err) => {
     if (err) {
@@ -63,7 +71,7 @@ const createFile = (filePath, contents) => {
   })
 }
 /**
- * 
+ * Render a mustache template with the given data and partials
  * @param {string} templateFilePath - path to main template file
  * @param {object} data             - data to use when rendering template
  * @param {object} partials         - keys: partial template names. values: partial template paths.
@@ -109,10 +117,14 @@ const generateRandomVersion = () => {
 
 /**
  * Create challenge instructions and output to the outputDir/README.md
+ * @param {string} drivePath - path to the usb drive
+ * @param {string} piecesDir - path to the directory containing the templates and data
  * @param {string} outputDir - path to the output directory
  * @param {object} versions - versions of the challenge to generate
  */
-const createInstructions = (drivePath, outputDir, versions) => {
+const createInstructions = (drivePath, piecesDir, outputDir, versions) => {
+  const instructionsTemplateDir = path.join(piecesDir, 'instructions')
+
   const finalData = {
     drivePath,
     outputDir,
@@ -130,14 +142,55 @@ const createInstructions = (drivePath, outputDir, versions) => {
     'part-2': path.join(instructionsTemplateDir, 'part-2', `part-2-${versions.p2}.mustache`),
     'part-3': path.join(instructionsTemplateDir, 'part-3', `part-3-${versions.p3}.mustache`),
   }
+
   const readmeTemplatePath = path.join(instructionsTemplateDir, 'README.mustache')
   const readme = renderMustache(readmeTemplatePath, finalData, partials)
   const readmeOutPath = path.join(outputDir, 'README.md')
   createFile(readmeOutPath, readme)
 }
 
-/* Main ************************************************/
+/**
+ * Create setup directory with the appropriate db datat
+ * @param {string} dbName - Name of db for this interview
+ * @param {string} piecesDir - Path to the directory containing templates and YAML
+ * @param {string} outputDir - Path to the output directory
+ */
+const createSetup = (dbName, piecesDir, outputDir) => {
+  const setupDir = path.join(piecesDir, 'code', 'setup')
+  const schemaTemplatePath = path.join(setupDir, 'schema.mustache')
+  const seedTemplatePath = path.join(setupDir, 'seed.mustache')
+  
+  const setupOutDir = path.join(outputDir, 'setup')
+  fs.mkdirSync(setupOutDir)
+  const schemaOutPath = path.join(setupOutDir, 'schema.sql')
+  const seedOutPath = path.join(setupOutDir, 'seed.sql')
+
+  const dbDir = path.join(piecesDir, 'db_data', dbName)
+  const dbConfig = readYaml(path.join(dbDir, `${dbName}.yaml`))
+
+  // why can't I just use Object.values here? 
+  const tables = Object.keys(dbConfig.tables).map(key => dbConfig['tables'][key])
+
+  const schema = renderMustache(schemaTemplatePath, { dbName, tables }, {})
+  createFile(schemaOutPath, schema)
+}
+
+/* Main ******************************************************************/
+
+/* Data locations */
+const piecesDir = './interview_pieces'
+// const drivePath = '/Volumes/INTERVIEWDRIVE'
+const drivePath = '/var/tmp/randomInterviews'
+
+/* Argument gathering */
+if (process.argv.length < 3) {
+  console.log(`
+  USAGE: node build.js <learner_name>
+  `)
+  process.exit(1)
+}
 
 const outputDir = createOutputDir(drivePath, learnerName)
 const versions = generateRandomVersion()
-createInstructions(drivePath, outputDir, versions)
+createInstructions(drivePath, piecesDir, outputDir, versions)
+createSetup(versions.db, piecesDir, outputDir)

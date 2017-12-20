@@ -1,0 +1,12 @@
+DROP DATABASE IF EXISTS {{ dbName }};
+CREATE DATABASE {{ dbName }};
+
+\c {{ dbName }}
+
+{{ #tables }}
+CREATE TABLE {{ tablename }}
+  {{ #columns }}
+    {{ name }} {{ type }} {{ options }}
+  {{ /columns }}
+;
+{{ /tables }}
