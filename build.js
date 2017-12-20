@@ -116,16 +116,14 @@ const generateRandomVersion = () => {
 }
 
 /**
- * Create challenge instructions and output to the outputDir/README.md
- * @param {string} drivePath - path to the usb drive
- * @param {string} piecesDir - path to the directory containing the templates and data
- * @param {string} outputDir - path to the output directory
- * @param {object} versions - versions of the challenge to generate
+ * Generate an object with random data matching the random versions
+ * @param {string} drivePath - Path to the drive containing interview files
+ * @param {string} outputDir - Path to output directory
+ * @param {object} versions - randomized versions for db, p1, p2, p3
+ * @returns {object} - Object containing data for the random versions
  */
-const createInstructions = (drivePath, piecesDir, outputDir, versions) => {
-  const instructionsTemplateDir = path.join(piecesDir, 'instructions')
-
-  const finalData = {
+const generateRandomData = (drivePath, outputDir, versions) => {
+  return {
     drivePath,
     outputDir,
     dbName: versions.db,
@@ -136,15 +134,24 @@ const createInstructions = (drivePath, piecesDir, outputDir, versions) => {
     p2: templateData[versions.db][versions.p2],
     p3: templateData[versions.db][versions.p3],
   }
+}
+
+/**
+ * Create challenge instructions and output to the outputDir/README.md
+ * @param {object} data - data to send to the template
+ * @param {string} piecesDir - path to the directory containing the templates and data
+ */
+const createInstructions = (data, piecesDir) => {
+  const instructionsTemplateDir = path.join(piecesDir, 'instructions')
 
   const partials = {
-    'part-1': path.join(instructionsTemplateDir, 'part-1', `part-1-${versions.p1}.mustache`),
-    'part-2': path.join(instructionsTemplateDir, 'part-2', `part-2-${versions.p2}.mustache`),
-    'part-3': path.join(instructionsTemplateDir, 'part-3', `part-3-${versions.p3}.mustache`),
+    'part-1': path.join(instructionsTemplateDir, 'part-1', `part-1-${data.p1version}.mustache`),
+    'part-2': path.join(instructionsTemplateDir, 'part-2', `part-2-${data.p2version}.mustache`),
+    'part-3': path.join(instructionsTemplateDir, 'part-3', `part-3-${data.p3version}.mustache`),
   }
 
   const readmeTemplatePath = path.join(instructionsTemplateDir, 'README.mustache')
-  const readme = renderMustache(readmeTemplatePath, finalData, partials)
+  const readme = renderMustache(readmeTemplatePath, data, partials)
   const readmeOutPath = path.join(outputDir, 'README.md')
   createFile(readmeOutPath, readme)
 }
@@ -190,7 +197,10 @@ if (process.argv.length < 3) {
   process.exit(1)
 }
 
+
 const outputDir = createOutputDir(drivePath, learnerName)
 const versions = generateRandomVersion()
-createInstructions(drivePath, piecesDir, outputDir, versions)
+const randomizedData = generateRandomData(drivePath, outputDir, versions)
+
+createInstructions(randomizedData, piecesDir)
 createSetup(versions.db, piecesDir, outputDir)
