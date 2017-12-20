@@ -208,8 +208,6 @@ const createSetup = (dbName, piecesDir, outputDir) => {
     table.columns[table.columns.length - 1].last = true
   })
   const schema = renderMustache(schemaTemplatePath, { dbName, tables }, {})
-
-  
   createFile(schemaOutPath, schema)
 
   // too much work to create seed file from yaml. 
@@ -221,6 +219,27 @@ const createSetup = (dbName, piecesDir, outputDir) => {
   // copy package.json over 
   const packageSrcPath = path.join(setupSrcDir, 'package.json')
   const packageDestPath = path.join(setupDestDir, 'package.json')
+  copyFile(packageSrcPath, packageDestPath)
+}
+
+/**
+ * Create part-1 directory with the appropriate data
+ * @param {string} dbName - Name of db for this interview
+ * @param {string} piecesDir - Path to the directory containing templates and YAML
+ * @param {string} outputDir - Path to the output directory
+ */
+const createPart1 = (dbName, piecesDir, outputDir) => {
+  const p1srcDir = path.join(piecesDir, 'code', 'part-1')
+  const p1destDir = path.join(outputDir, 'part-1')
+  const templateFile = path.join(p1srcDir, 'db.js')
+
+  createDir(p1destDir)
+
+  const dbjsContent = renderMustache(templateFile, { dbName }, {})
+  createFile(path.join(p1destDir, 'db.js'), dbjsContent)
+
+  const packageSrcPath = path.join(p1srcDir, 'package.json')
+  const packageDestPath = path.join(p1destDir, 'package.json')
   copyFile(packageSrcPath, packageDestPath)
 }
 
@@ -246,3 +265,4 @@ const randomizedData = generateRandomData(drivePath, outputDir, templateData, ve
 
 createInstructions(randomizedData, piecesDir)
 createSetup(versions.db, piecesDir, outputDir)
+createPart1(versions.db, piecesDir, outputDir)
