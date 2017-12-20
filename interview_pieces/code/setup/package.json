@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "Bonnie Schulkin",
   "scripts": {
-    "setup": "psql < schema.sql && psql < setup.sql"
+    "setup": "psql < schema.sql && psql < seed.sql"
   },
   "devDependencies": {
   }

@@ -203,7 +203,13 @@ const createSetup = (dbName, piecesDir, outputDir) => {
 
   // render schema from template
   const tables = Object.keys(dbConfig.tables).map(key => dbConfig['tables'][key])
+  // account for commas that need to be all but the last item >_<
+  tables.forEach((table) => {
+    table.columns[table.columns.length - 1].last = true
+  })
   const schema = renderMustache(schemaTemplatePath, { dbName, tables }, {})
+
+  
   createFile(schemaOutPath, schema)
 
   // too much work to create seed file from yaml. 

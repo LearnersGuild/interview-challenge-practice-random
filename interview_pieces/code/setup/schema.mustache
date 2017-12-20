@@ -4,9 +4,9 @@ CREATE DATABASE {{ dbName }};
 \c {{ dbName }}
 
 {{ #tables }}
-CREATE TABLE {{ tablename }}
+CREATE TABLE {{ tablename }} (
   {{ #columns }}
-    {{ name }} {{ type }} {{ options }}
+    {{ name }} {{ type }} {{ options }} {{^last}},{{/last}}
   {{ /columns }}
-;
+);
 {{ /tables }}
