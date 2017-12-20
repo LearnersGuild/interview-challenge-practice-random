@@ -121,7 +121,7 @@ const renderMustache = (templateFilePath, data, partials) => {
     return mustache.render(templateString, data, partialStrings)
 
   } catch(error) {
-    fatalError(error, `Could not render template ${templateFilePath}:`)
+    fatalError(error, `Could not render template ${templateFilePath}`)
   }
 }
 
@@ -191,24 +191,31 @@ const createInstructions = (data, piecesDir) => {
  * @param {string} outputDir - Path to the output directory
  */
 const createSetup = (dbName, piecesDir, outputDir) => {
-  const setupDir = path.join(piecesDir, 'code', 'setup')
-  const schemaTemplatePath = path.join(setupDir, 'schema.mustache')
-  
-  const setupOutDir = path.join(outputDir, 'setup')
-  createDir(setupOutDir)
-  const schemaOutPath = path.join(setupOutDir, 'schema.sql')
-
+  const setupSrcDir = path.join(piecesDir, 'code', 'setup')
   const dbDir = path.join(piecesDir, 'db_data', dbName)
+  const schemaTemplatePath = path.join(setupSrcDir, 'schema.mustache')
   const dbConfig = readYaml(path.join(dbDir, `${dbName}.yaml`))
+  
+  // create output dir
+  const setupDestDir = path.join(outputDir, 'setup')
+  createDir(setupDestDir)
+  const schemaOutPath = path.join(setupDestDir, 'schema.sql')
 
+  // render schema from template
   const tables = Object.keys(dbConfig.tables).map(key => dbConfig['tables'][key])
   const schema = renderMustache(schemaTemplatePath, { dbName, tables }, {})
   createFile(schemaOutPath, schema)
 
-  // too much work to create seed file from yaml. for now, just copy over
-  const seedSourcePath = path.join(piecesDir, 'db_data', dbName, 'seed.sql')
-  const seedDestPath = path.join(setupOutDir, 'seed.sql')
+  // too much work to create seed file from yaml. 
+  // for now, just copy over
+  const seedSourcePath = path.join(dbDir, 'seed.sql')
+  const seedDestPath = path.join(setupDestDir, 'seed.sql')
   copyFile(seedSourcePath, seedDestPath)
+
+  // copy package.json over 
+  const packageSrcPath = path.join(setupSrcDir, 'package.json')
+  const packageDestPath = path.join(setupDestDir, 'package.json')
+  copyFile(packageSrcPath, packageDestPath)
 }
 
 /* Main ******************************************************************/
