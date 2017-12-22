@@ -4,7 +4,8 @@ const templateData = {
       dbFuncName: 'getFlightPassengers',
       parameterName: 'flightNumber',
       parameterDescription: 'flight number',
-      columnName: 'name',
+      parameterColumnName: 'flight_number',
+      dataColumnName: 'name',
       dataName: 'passenger',
       sampleDbResult: 
 `[ 
@@ -25,7 +26,8 @@ const templateData = {
       dbFuncName: 'getRecipeIngredients',
       parameterName: 'recipeName',
       parameterDescription: 'recipe name',
-      columnName: 'name',
+      parameterColumnName: 'name',
+      dataColumnName: 'name',
       dataName: 'ingredient',
       sampleDbResult: 
 `[ 

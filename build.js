@@ -186,15 +186,13 @@ const createInstructions = (data, piecesDir) => {
 
 /**
  * Create setup directory with the appropriate db data
- * @param {string} dbName - Name of db for this interview
+ * @param {object} dbConfig - db config for this interview
  * @param {string} piecesDir - Path to the directory containing templates and YAML
  * @param {string} outputDir - Path to the output directory
  */
-const createSetup = (dbName, piecesDir, outputDir) => {
+const createSetup = (dbConfig, piecesDir, outputDir) => {
   const setupSrcDir = path.join(piecesDir, 'code', 'setup')
-  const dbDir = path.join(piecesDir, 'db_data', dbName)
   const schemaTemplatePath = path.join(setupSrcDir, 'schema.mustache')
-  const dbConfig = readYaml(path.join(dbDir, `${dbName}.yaml`))
   
   // create output dir
   const setupDestDir = path.join(outputDir, 'setup')
@@ -207,12 +205,12 @@ const createSetup = (dbName, piecesDir, outputDir) => {
   tables.forEach((table) => {
     table.columns[table.columns.length - 1].last = true
   })
-  const schema = renderMustache(schemaTemplatePath, { dbName, tables }, {})
+  const schema = renderMustache(schemaTemplatePath, { dbName: dbConfig.dbName, tables }, {})
   createFile(schemaOutPath, schema)
 
   // too much work to create seed file from yaml. 
   // for now, just copy over
-  const seedSourcePath = path.join(dbDir, 'seed.sql')
+  const seedSourcePath = path.join(dbConfig.dbSrcDir, 'seed.sql')
   const seedDestPath = path.join(setupDestDir, 'seed.sql')
   copyFile(seedSourcePath, seedDestPath)
 
@@ -225,22 +223,63 @@ const createSetup = (dbName, piecesDir, outputDir) => {
 /**
  * Create part-1 directory with the appropriate data
  * @param {string} dbName - Name of db for this interview
+ * @param {object} paths - paths to source and dest dirs
+ */
+const createPart1 = (dbName, paths) => {
+  const dbjsContent = renderMustache(paths.dbSetupTemplatePath, { dbName }, {})
+  createFile(path.join(paths.p1destDir, 'db.js'), dbjsContent)
+
+  const packageSrcPath = path.join(paths.p1srcDir, 'package.json')
+  const packageDestPath = path.join(paths.p1destDir, 'package.json')
+  copyFile(packageSrcPath, packageDestPath)
+}
+
+/**
+ * Create db.js for part-2 and part-3 with the appropriate data
+ * @param {object} data - Data for this particular challenge
+ * @param {object} dbConfig - db config for this interview
+ * @param {object} paths - paths to source and dest dirs
+ */
+const createDbjsSolution = (data, dbConfig, paths) => {
+
+  Array(2, 3).forEach(partNum => {
+    const dbJsSrcDir = path.join(paths.codeDir, data[`p${partNum}version`], 'db')
+    const dbTemplate = path.join(dbJsSrcDir, 'db.mustache')
+    const jsDoc = path.join(dbJsSrcDir, 'jsDoc.mustache')
+    const dbjsdata = Object.assign(data[`p${partNum}`], { mainTableName: data.mainTableName, joinTableName: data.joinTableName, dbName: data.dbName })
+    const dbjsContent = renderMustache(dbTemplate, dbjsdata, { dbSetup: paths.dbSetupTemplatePath, jsDoc })
+
+    const dbJsDestDir = path.join(paths[`p${partNum}destDir`], 'db')
+    createDir(dbJsDestDir)
+    createFile(path.join(dbJsDestDir, 'db.js'), dbjsContent)
+  })
+}
+
+/**
+ * Create parts directories with the appropriate data
+ * @param {object} randomizedData - Data for this particular challenge
+ * @param {object} dbConfig - db config for this interview
  * @param {string} piecesDir - Path to the directory containing templates and YAML
  * @param {string} outputDir - Path to the output directory
  */
-const createPart1 = (dbName, piecesDir, outputDir) => {
-  const p1srcDir = path.join(piecesDir, 'code', 'part-1')
-  const p1destDir = path.join(outputDir, 'part-1')
-  const templateFile = path.join(p1srcDir, 'db.js')
+const createParts = (randomizedData, dbConfig, piecesDir, outputDir) => {
+  const paths = {}
+  paths.codeDir = path.join(piecesDir, 'code')
+  Array(1, 2, 3).forEach(partNum => {
+    const partDir = `part-${partNum}`
+    const destDir = path.join(outputDir, partDir)
+    paths[`p${partNum}srcDir`] = path.join(paths.codeDir, partDir)
+    paths[`p${partNum}destDir`] = destDir
+    createDir(destDir)
+  })
+  paths.dbJsDestDir = path.join(paths.p2destDir, 'db')
+  paths.dbSetupTemplatePath = path.join(paths.p1srcDir, 'db.mustache')
 
-  createDir(p1destDir)
+  randomizedData.mainTableName = dbConfig.tables.main.tablename
+  randomizedData.joinTableName = dbConfig.tables.join.tablename
 
-  const dbjsContent = renderMustache(templateFile, { dbName }, {})
-  createFile(path.join(p1destDir, 'db.js'), dbjsContent)
-
-  const packageSrcPath = path.join(p1srcDir, 'package.json')
-  const packageDestPath = path.join(p1destDir, 'package.json')
-  copyFile(packageSrcPath, packageDestPath)
+  createPart1(dbConfig.dbName, paths)
+  createDbjsSolution(randomizedData, dbConfig, paths)
 }
 
 /* Main ******************************************************************/
@@ -258,11 +297,14 @@ if (process.argv.length < 3) {
   process.exit(1)
 }
 
-
 const outputDir = createOutputDir(drivePath, learnerName)
 const versions = generateRandomVersion()
 const randomizedData = generateRandomData(drivePath, outputDir, templateData, versions)
+const dbSrcDir = path.join(piecesDir, 'db_data', versions.db)
+const dbConfig = readYaml(path.join(dbSrcDir, `${versions.db}.yaml`))
+dbConfig.dbName = versions.db
+dbConfig.dbSrcDir = dbSrcDir
 
 createInstructions(randomizedData, piecesDir)
-createSetup(versions.db, piecesDir, outputDir)
-createPart1(versions.db, piecesDir, outputDir)
+createSetup(dbConfig, piecesDir, outputDir)
+createParts(randomizedData, dbConfig, piecesDir, outputDir)
