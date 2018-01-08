@@ -1,11 +1,12 @@
 {{> dbSetup}}
 
 {{> jsDoc}}
+
 const {{ dbFuncName }} = ({{ parameterName }}) =>
   db.query(`
     SELECT {{ dataName }}s.{{ dataColumnName }}
     FROM {{ dataName }}s
-      JOIN {{ joinTableName }}s
+      JOIN {{ joinTableName }}
         ON {{ dataName }}.id = {{ joinTableName }}.{{ dataName }}_id
       JOIN {{ mainTableName }}
       ON {{ mainTableName }}.id = {{ joinTableName }}.{{ mainTableName }}_id

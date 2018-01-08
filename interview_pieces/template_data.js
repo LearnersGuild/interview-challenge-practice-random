@@ -1,3 +1,19 @@
+const flights = {
+  serverRunningPhrase: 'Flying high'
+}
+
+const recipes = {
+  serverRunningPhrase: 'Baking up a storm'
+}
+
+const movies = {
+  serverRunningPhrase: 'aaaaaaand action!'
+}
+
+const teams = {
+  serverRunningPhrase: 'Playing ball'
+}
+
 const templateData = {
   flights: {
     a: {
@@ -18,7 +34,8 @@ const templateData = {
       endpoint: 'flight_roster',
       endpointDescription: 'flight roster',
       exampleGetData: '1147A',
-      buttonName: 'Give passenger a parachute'
+      buttonName: 'Give passenger a parachute',
+      serverRunningPhrase: flights.serverRunningPhrase
     },
   },
   recipes: {
