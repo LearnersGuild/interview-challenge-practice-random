@@ -5,8 +5,6 @@ const {{ p2.dbFuncName }} = require('./db/db')
 // JSDoc for {{ p2.dbFuncName }}
 {{> jsDoc}}
 
-const app = express()
-// app.set('view engine', 'pug')
-// app.set('view engine', 'ejs')
+{{> defineAppAndView }}
 
-app.listen(3000, () => console.log('{{ p2.serverRunningPhrase }} on port 3000!'))
+{{> appStart }}
