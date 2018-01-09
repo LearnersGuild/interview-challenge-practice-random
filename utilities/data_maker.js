@@ -6,7 +6,7 @@ const { readYaml, createDir } = require('../utilities/file_utilities')
  * @returns {object} - object with the randomly generated versions
  */
 const generateRandomVersions = () => {
-  const randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+  const randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
   const p1 = 'a'
   const p2 = 'a'
   const p3 = 'a'
@@ -38,34 +38,30 @@ const constructPaths = (versions, outputDir) => {
   Array(1, 2, 3).forEach(partNum => {
     const partDir = `part-${partNum}`
     const destDir = path.join(outputDir, partDir)
-    const srcDir = path.join(codeDir, partDir)
     createDir(destDir)
 
+    // db.js paths
     const dbJsSrcDir = path.join(codeDir, 'db', versions[`p${partNum}`])
     const dbJsDestDir = path.join(destDir, 'db')
     createDir(dbJsDestDir)
 
+    // package.json paths
+    const packageSrcPath = path.join(codeDir, 'package_json', `p${partNum}-package.json`)
+    const packageDestPath = path.join(destDir, 'package.json')
+
+    // part-specific templates
     const dbTemplate = path.join(dbJsSrcDir, 'db.mustache')
 
     // add the generated paths to the larger paths object
     paths[`p${partNum}`] = {
-      srcDir,
       destDir,
       dbJsSrcDir,
       dbJsDestDir,
       dbTemplate,
+      packageSrcPath,
+      packageDestPath,
     }
   })
-
-  // template paths
-  const instructionsDir = path.join(piecesDir, 'instructions')
-  paths.templates = {
-    instructionsDir,
-    readme: path.join(instructionsDir, 'README.mustache'),
-    dbSetup: path.join(paths.p1.srcDir, 'db.mustache'),
-    jsDoc: path.join(paths.p1.dbJsSrcDir, 'jsDoc.mustache'),
-    schema: path.join(piecesDir, 'code', 'setup', 'schema.mustache'),
-  }
 
   // db setup file paths
   paths.dbSrcDir = path.join(piecesDir, 'db_data', versions.db)
@@ -77,17 +73,24 @@ const constructPaths = (versions, outputDir) => {
   paths.seedSourcePath = path.join(paths.dbSrcDir, 'seed.sql')
   paths.seedDestPath = path.join(setupDestDir, 'seed.sql')
 
-  paths.packageSrcPath = path.join(setupSrcDir, 'package.json')
-  paths.packageDestPath = path.join(setupDestDir, 'package.json')
+  paths.setupPackageDestPath = path.join(setupDestDir, 'package.json')
   paths.schemaOutPath = path.join(setupDestDir, 'schema.sql')
 
   // app.js file paths
 
   // views file paths
 
-  // package.json file paths
-  paths.packageSrcPath = path.join(paths.p1.srcDir, 'package.json')
-  paths.packageDestPath = path.join(paths.p1.destDir, 'package.json')
+  // template paths
+  const instructionsDir = path.join(piecesDir, 'instructions')
+  paths.templates = {
+    instructionsDir,
+    readme: path.join(instructionsDir, 'README.mustache'),
+    dbSetup: path.join(codeDir, 'db', 'common', 'db_connection.mustache'),
+    setupPackage: path.join(setupSrcDir, 'package_json.mustache'),
+    jsDoc: path.join(paths.p1.dbJsSrcDir, 'jsDoc.mustache'),
+    schema: path.join(piecesDir, 'code', 'setup', 'schema.mustache'),
+  }
+
 
   return paths
 }

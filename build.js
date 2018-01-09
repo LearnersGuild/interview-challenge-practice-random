@@ -36,14 +36,15 @@ const createInstructions = (data) => {
 }
 
 /**
- * Create package.json files for the project
+ * Copy over package.json files for the project
  * @param {object} data - data for this challenge
  */
 const createPackageJSON = (data) =>  {
   const { paths } = data
 
-  // copyFile(paths.packageSrcPath, paths.packageDestPath)
-
+  Array(1, 2, 3).forEach ((partNum) => {
+    copyFile(paths[`p${partNum}`].packageSrcPath, paths[`p${partNum}`].packageDestPath)
+  })
 }
 
 /**
@@ -67,8 +68,10 @@ const createSetup = (data) => {
   // for now, just copy over
   copyFile(data.paths.seedSourcePath, data.paths.seedDestPath)
 
-  // copy package.json over 
-  copyFile(data.paths.packageSrcPath, data.paths.packageDestPath)
+  // finally, package.json, customized with db name
+  const package = renderMustache(paths.templates.setupPackage, { dbName: data.dbName }, { })
+  createFile(paths.setupPackageDestPath, package)
+
 }
 
 /**
