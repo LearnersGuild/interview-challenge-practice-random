@@ -49,17 +49,24 @@ const constructPaths = (versions, outputDir) => {
     const packageSrcPath = path.join(codeDir, 'package_json', `p${partNum}-package.json`)
     const packageDestPath = path.join(destDir, 'package.json')
 
+    // app.js file paths
+    const appJsBase = path.join(codeDir, 'app', versions[`p${partNum}`])
+    const appDestPath = path.join(destDir, 'app.js')
+
     // part-specific templates
     const dbTemplate = path.join(dbJsSrcDir, 'db.mustache')
+    const appTemplate = path.join(appJsBase, `p${partNum}-app.mustache`)
 
     // add the generated paths to the larger paths object
     paths[`p${partNum}`] = {
       destDir,
       dbJsSrcDir,
       dbJsDestDir,
-      dbTemplate,
       packageSrcPath,
       packageDestPath,
+      appDestPath,
+      dbTemplate,
+      appTemplate,
     }
   })
 
@@ -76,7 +83,8 @@ const constructPaths = (versions, outputDir) => {
   paths.setupPackageDestPath = path.join(setupDestDir, 'package.json')
   paths.schemaOutPath = path.join(setupDestDir, 'schema.sql')
 
-  // app.js file paths
+  // appJs common files
+  const appJsCommonPath = path.join(codeDir, 'app', 'common')
 
   // views file paths
 
@@ -89,6 +97,8 @@ const constructPaths = (versions, outputDir) => {
     setupPackage: path.join(setupSrcDir, 'package_json.mustache'),
     jsDoc: path.join(paths.p1.dbJsSrcDir, 'jsDoc.mustache'),
     schema: path.join(piecesDir, 'code', 'setup', 'schema.mustache'),
+    appStart: path.join(appJsCommonPath, 'app_start.mustache'),
+    defineAppAndView: path.join(appJsCommonPath, 'define_app_and_views.mustache'),
   }
 
 

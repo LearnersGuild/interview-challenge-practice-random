@@ -25,7 +25,7 @@ const createInstructions = (data) => {
   }
 
   const readme = renderMustache(data.paths.templates.readme, data, partials)
-  const readmeOutPath = path.join(outputDir, 'README.md')
+  const readmeOutPath = path.join(data.outputDir, 'README.md')
   createFile(readmeOutPath, readme)
 
   // copy ERD over
@@ -106,13 +106,35 @@ const createDbjsSolution = (data) => {
 /**
  * Create app.js for parts 2 and 3
  * @param {object} data - Data for this particular challenge
- * @param {object} dbConfig - db config for this interview
- * @param {object} paths - paths to source and dest dirs
  */
-const createApp = (data, dbConfig, paths) => {
-  const partials = {
-    
-  }
+const createApp = (data) => {
+  const { paths } = data
+  const { jsDoc, appStart, defineAppAndView } = paths.templates
+
+  Array(2, 3).forEach((partNum) => {
+    const partData = data[`p${partNum}`]
+    const partPaths = paths[`p${partNum}`]
+    const appJsContent = renderMustache(partPaths.appTemplate, partData, { jsDoc, appStart, defineAppAndView })
+    createFile(partPaths.appDestPath, appJsContent)
+  })
+}
+
+/**
+ * Create the challenge using other functions
+ */
+const createChallenge = () => {
+  // const drivePath = '/Volumes/INTERVIEW'
+  const drivePath = '/var/tmp/randomInterviews'
+
+  const outputDir = createOutputDir(drivePath, learnerName)
+  const challengeData = generateChallengeData(outputDir, drivePath)
+
+  createInstructions(challengeData)
+  createSetup(challengeData)
+  createPart1(challengeData)
+  createPackageJSON(challengeData)
+  createDbjsSolution(challengeData)
+  createApp(challengeData)
 }
 
 /* Main ******************************************************************/
@@ -125,14 +147,4 @@ if (process.argv.length < 3) {
   process.exit(1)
 }
 
-// const drivePath = '/Volumes/INTERVIEW'
-const drivePath = '/var/tmp/randomInterviews'
-
-const outputDir = createOutputDir(drivePath, learnerName)
-const challengeData = generateChallengeData(outputDir, drivePath)
-
-createInstructions(challengeData)
-createSetup(challengeData)
-createPart1(challengeData)
-createPackageJSON(challengeData)
-createDbjsSolution(challengeData)
+createChallenge()

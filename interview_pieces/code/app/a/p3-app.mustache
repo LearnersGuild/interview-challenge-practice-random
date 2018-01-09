@@ -1,0 +1,19 @@
+{{=<% %>=}}
+<% >defineAppAndView %>
+
+// JSDoc for <%dbFuncName %>
+<% >jsDoc%>
+
+app.get('/<%endpoint %>', (req, res) => {
+  const <% parameterName %> = req.query.<% parameterName %>;
+  <% dbFuncName %>(<% parameterName %>)
+    .then((<% dataName %>s) => {
+      res.render('<% endpoint %>', { <% parameterName %>, <% dataName %>s });
+    })
+    .catch((err) => {
+      res.render('<% endpoint %>', { message: `An error occurred: ${err.toString()}` });
+    })
+    .catch(console.error);
+});
+
+<% >appStart %>

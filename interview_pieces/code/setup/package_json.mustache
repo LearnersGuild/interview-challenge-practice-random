@@ -1,0 +1,15 @@
+{
+  "name": "setup",
+  "version": "1.0.0",
+  "author": "Bonnie Schulkin",
+  "scripts": {
+    "db:setup": "npm run db:create && npm run db:seed",
+    "db:create": "psql < schema.sql",
+    "db:seed": "psql {{ dbName }} < seed.sql",
+    "install:all": "cd ../part-1 && npm install && cd ../part-2 && npm install && cd ../part-3 && npm install && cd ../setup"
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "pg-promise": "^7.3.2"
+  }
+}
