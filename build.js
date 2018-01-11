@@ -54,6 +54,7 @@ const createPackageJSON = (config) =>  {
  */
 const createSetup = (config) => {
   const { dbConfig, paths } = config
+  const { dbName } = dbConfig
 
   // render schema from template
   const tables = Object.keys(dbConfig.tables).map(key => dbConfig.tables[key])
@@ -62,7 +63,7 @@ const createSetup = (config) => {
   tables.forEach((table) => {
     table.columns[table.columns.length - 1].last = true
   })
-  const schema = renderMustache(paths.setup.src.schemaFile, { dbName: config.dbName, tables }, {})
+  const schema = renderMustache(paths.setup.src.schemaFile, { dbName, tables }, {})
   createFile(paths.setup.dest.schemaFile, schema)
 
   // too much work to create seed file from yaml. 
@@ -70,7 +71,7 @@ const createSetup = (config) => {
   copyFile(paths.setup.src.seedFile, paths.setup.dest.seedFile)
 
   // finally, package.json, customized with db name
-  const package = renderMustache(paths.setup.src.packageTemplate, { dbName: config.dbName }, { })
+  const package = renderMustache(paths.setup.src.packageTemplate, { dbName }, { })
   createFile(paths.setup.dest.setupPackageFile, package)
 
 }
