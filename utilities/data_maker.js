@@ -10,7 +10,7 @@ const generateRandomVersions = () => {
   const p1 = 'a'
   const p2 = 'a'
   const p3 = 'a'
-  const db = 'recipes'
+  const db = 'movies'
   const dbRandomName = `${db}_${randomString}`
   return {
     p1,

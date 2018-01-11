@@ -1,5 +1,3 @@
-\c movie_genres
-
 INSERT INTO genres
   (id, name)
 VALUES
