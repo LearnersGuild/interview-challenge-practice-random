@@ -32,10 +32,8 @@ const createInstructions = (config) => {
   createFile(paths.readme.dest.readmeFile, readmeContents)
 
   // copy ERD over
-  // TODO
+  copyFile(paths.readme.src.erdFile, paths.readme.dest.erdFile)
 
-  // create Postico .fav file (?)
-  // TODO
 }
 
 /**
@@ -121,11 +119,18 @@ const createParts2and3 = (config) => {
     createFile(partPaths.dest.appJsFile, appJsContent)
 
     // views (*.pug and *.ejs)
-    
+    Array('pug', 'ejs').forEach(viewType => {
+      const viewContent = renderMustache(partPaths.src[`${viewType}Template`], partData, {})
+      createFile(partPaths.dest[`${viewType}File`], viewContent)
+    })
 
     // public
-
-
+    if (partNum > 2) {
+      Array('js', 'css').forEach(staticType => {
+        const staticContent = renderMustache(partPaths.src[`${staticType}Template`], partData, {})
+        createFile(partPaths.dest[`${staticType}File`], staticContent)
+      })
+    }
   })
 }
 

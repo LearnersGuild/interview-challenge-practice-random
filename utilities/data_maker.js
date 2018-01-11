@@ -35,28 +35,13 @@ const constructPaths = (versions, destDir, data, drivePath) => {
   paths.common.src = {}
   paths.common.dest = {}
   
-  // non-part-specific source paths
+  // source paths
   paths.common.src.rootDir = path.join(__dirname, '../interview_pieces')
   paths.common.src.codeDir = path.join(paths.common.src.rootDir, 'code')
-  paths.common.src.viewsDir = path.join(paths.common.src.rootDir, 'views')
-  paths.common.src.publicDir = path.join(paths.common.src.rootDir, 'public')
-  paths.common.src.jsDir = path.join(paths.common.src.publicDir, 'js')
-  paths.common.src.css = path.join(paths.common.src.publicDir, 'css' )
 
   // for consistency, store drivePath and root destination dir here
   paths.common.dest.drivePath = drivePath
   paths.common.dest.rootDir = destDir
-
-  // instructions (README)
-  paths.readme = {}
-  paths.readme.src = {}
-  paths.readme.dest = {}
-  paths.readme.src.rootDir = path.join(paths.common.src.rootDir, 'instructions')
-  paths.readme.src.readmeTemplate = path.join(paths.readme.src.rootDir, 'README.mustache')
-  paths.readme.src.p1Template = path.join(paths.readme.src.rootDir, `p1-${versions.p1}.mustache`)
-  paths.readme.src.p2Template = path.join(paths.readme.src.rootDir, `p2-${versions.p2}.mustache`)
-  paths.readme.src.p3Template = path.join(paths.readme.src.rootDir, `p3-${versions.p3}.mustache`)
-  paths.readme.dest.readmeFile = path.join(paths.common.dest.rootDir, 'README.md')
 
   // project setup
   paths.setup = {}
@@ -74,6 +59,22 @@ const constructPaths = (versions, destDir, data, drivePath) => {
   paths.setup.src.seedFile = path.join(paths.setup.src.dataDir, 'seed.sql')
   paths.setup.src.schemaFile = path.join(paths.setup.src.setupDir, 'schema.mustache'),
   paths.setup.dest.seedFile = path.join(paths.setup.dest.rootDir, 'seed.sql')
+  
+  // instructions (README)
+  paths.readme = {}
+  paths.readme.src = {}
+  paths.readme.dest = {}
+  paths.readme.src.rootDir = path.join(paths.common.src.rootDir, 'instructions')
+  paths.readme.src.readmeTemplate = path.join(paths.readme.src.rootDir, 'README.mustache')
+  paths.readme.src.p1Template = path.join(paths.readme.src.rootDir, `p1-${versions.p1}.mustache`)
+  paths.readme.src.p2Template = path.join(paths.readme.src.rootDir, `p2-${versions.p2}.mustache`)
+  paths.readme.src.p3Template = path.join(paths.readme.src.rootDir, `p3-${versions.p3}.mustache`)
+  paths.readme.dest.readmeFile = path.join(paths.common.dest.rootDir, 'README.md')
+
+  // erd files
+  const erdFileName = `${versions.db}_ERD.png`
+  paths.readme.src.erdFile = path.join(paths.setup.src.dataDir, erdFileName)
+  paths.readme.dest.erdFile = path.join(paths.common.dest.rootDir, 'part-1', erdFileName)
   
   // app.js common files
   paths.appJs = {}
@@ -122,8 +123,9 @@ const constructPaths = (versions, destDir, data, drivePath) => {
 
     // views file paths
     if (partNum > 1) {
-      p.src.pugTemplate = path.join(paths.common.src.viewsDir, `p${partNum}.pug.mustache`)
-      p.src.ejsTemplate = path.join(paths.common.src.viewsDir, `p${partNum}.ejs.mustache`)
+      p.src.viewsDir = path.join(paths.common.src.codeDir, 'views', versions[`p${partNum}`])
+      p.src.pugTemplate = path.join(p.src.viewsDir, `p${partNum}-pug.mustache`)
+      p.src.ejsTemplate = path.join(p.src.viewsDir, `p${partNum}-ejs.mustache`)
       p.dest.viewsDir = path.join(p.dest.rootDir, 'views')
       p.dest.pugFile = path.join(p.dest.viewsDir, `${endpointString}.pug`)
       p.dest.ejsFile = path.join(p.dest.viewsDir, `${endpointString}.ejs`)
@@ -132,8 +134,9 @@ const constructPaths = (versions, destDir, data, drivePath) => {
 
     // public file paths
     if (partNum > 2) {
-      p.src.cssFile = (paths.common.src.publicDir, `p${partNum}.css`)
-      p.src.jsFile = (paths.common.src.publicDir, `p${partNum}.js`)
+      p.src.publicDir = path.join(paths.common.src.codeDir, 'public', versions[`p${partNum}`])
+      p.src.cssTemplate = path.join(p.src.publicDir, `p${partNum}-css.mustache`)
+      p.src.jsTemplate = path.join(p.src.publicDir, `p${partNum}-js.mustache`)
       p.dest.publicDir = path.join(p.dest.rootDir, 'public')
       p.dest.jsFile = path.join(p.dest.publicDir, `${endpointString}.js`)
       p.dest.cssFile = path.join(p.dest.publicDir, `${endpointString}.css`)
