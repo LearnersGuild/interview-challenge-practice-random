@@ -10,7 +10,7 @@ const generateRandomVersions = () => {
   const p1 = 'a'
   const p2 = 'a'
   const p3 = 'a'
-  const db = 'flights'
+  const db = 'recipes'
   const dbRandomName = `${db}_${randomString}`
   return {
     p1,
@@ -168,9 +168,9 @@ const generateChallengeConfig = (learnerName) => {
   // general data
   const templateData = require(path.join(__dirname, '../interview_pieces/template_data'))
   const data = {
-    p1: Object.assign (templateData[versions.db][versions.p1], { version: versions.p1 }),
-    p2: Object.assign (templateData[versions.db][versions.p2], { version: versions.p2 }),
-    p3: Object.assign (templateData[versions.db][versions.p3], { version: versions.p3 }),
+    p1: Object.assign (templateData[versions.db][versions.p1], templateData[versions.db].common),
+    p2: Object.assign (templateData[versions.db][versions.p2], templateData[versions.db].common),
+    p3: Object.assign (templateData[versions.db][versions.p3], templateData[versions.db].common),
   }
 
   // construct the necessary paths (and create dirs as needed)

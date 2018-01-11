@@ -1,5 +1,3 @@
-\c recipes
-
 INSERT INTO types (name) VALUES
   ('cake'),
   ('cookies'),
