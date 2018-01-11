@@ -6,11 +6,12 @@ const { readYaml, createDir, createOutputDir } = require('../utilities/file_util
  * @returns {object} - object with the randomly generated versions
  */
 const generateRandomVersions = () => {
+  const dbs = ['flights', 'teams', 'movies', 'recipes']
   const randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
   const p1 = 'a'
   const p2 = 'a'
   const p3 = 'a'
-  const db = 'teams'
+  const db = dbs[Math.floor(Math.random()*dbs.length)]
   const dbRandomName = `${db}_${randomString}`
   return {
     p1,
