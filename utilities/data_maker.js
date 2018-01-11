@@ -53,16 +53,16 @@ const constructPaths = (versions, destDir, data, drivePath) => {
   paths.readme.dest = {}
   paths.readme.src.rootDir = path.join(paths.common.src.rootDir, 'instructions')
   paths.readme.src.readmeTemplate = path.join(paths.readme.src.rootDir, 'README.mustache')
-  paths.readme.src.p1Template = (paths.readme.src.rootDir, `p1-${versions.p1}.mustache`)
-  paths.readme.src.p2Template = (paths.readme.src.rootDir, `p2-${versions.p2}.mustache`)
-  paths.readme.src.p3Template = (paths.readme.src.rootDir, `p3-${versions.p3}.mustache`)
+  paths.readme.src.p1Template = path.join(paths.readme.src.rootDir, `p1-${versions.p1}.mustache`)
+  paths.readme.src.p2Template = path.join(paths.readme.src.rootDir, `p2-${versions.p2}.mustache`)
+  paths.readme.src.p3Template = path.join(paths.readme.src.rootDir, `p3-${versions.p3}.mustache`)
   paths.readme.dest.readmeFile = path.join(paths.common.dest.rootDir, 'README.md')
 
   // project setup
   paths.setup = {}
   paths.setup.src = {}
   paths.setup.dest = {}
-  paths.setup.src.setupDir = path.join(paths.common.src.rootDir, 'setup')
+  paths.setup.src.setupDir = path.join(paths.common.src.codeDir, 'setup')
   paths.setup.src.packageTemplate = path.join(paths.setup.src.setupDir, 'package_json.mustache')
   paths.setup.dest.rootDir = path.join(paths.common.dest.rootDir, 'setup')
   paths.setup.dest.setupPackageFile = path.join(paths.setup.dest.rootDir, 'package.json')
@@ -89,7 +89,6 @@ const constructPaths = (versions, destDir, data, drivePath) => {
   paths.dbJs.src.rootDir = path.join(paths.common.src.codeDir, 'db')
   paths.dbJs.src.commonDir = path.join(paths.dbJs.src.rootDir, 'common')
   paths.dbJs.src.dbJsConnectionTemplate = path.join(paths.dbJs.src.commonDir, 'db_connection.mustache')
-  paths.dbJs.src.jsDocTemplate = path.join(paths.dbJs.src.commonDir, 'jsDoc.mustache')
   
   // construct paths for part-specific directory paths, and create the destination directories
   Array(1, 2, 3).forEach(partNum => {
@@ -106,12 +105,13 @@ const constructPaths = (versions, destDir, data, drivePath) => {
     createDir(p.dest.rootDir)
     
     // package.json paths
-    p.src.packageFile = path.join(paths.common.src.rootDir, 'package_json', `p${partNum}-package.json`)
+    p.src.packageFile = path.join(paths.common.src.codeDir, 'package_json', `p${partNum}-package.json`)
     p.dest.packageFile = path.join(p.dest.rootDir, 'package.json')
     
     // db.js paths
     p.src.dbJsDir = path.join(paths.dbJs.src.rootDir, versions[`p${partNum}`])
     p.src.dbJsTemplate = path.join(p.src.dbJsDir, 'db.mustache')
+    p.src.jsDocTemplate = path.join(p.src.dbJsDir, 'jsDoc.mustache')
     p.dest.dbJsDir = path.join(p.dest.rootDir, 'db')
     createDir(p.dest.dbJsDir)
 

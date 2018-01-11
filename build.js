@@ -26,7 +26,7 @@ const createInstructions = (config) => {
     drivePath: paths.common.dest.drivePath,
   })
 
-  const readmeContents = renderMustache(paths.readme.src.readmeTemplates, templateData, partials)
+  const readmeContents = renderMustache(paths.readme.src.readmeTemplate, templateData, partials)
   createFile(paths.readme.dest.readmeFile, readmeContents)
 
   // copy ERD over
@@ -99,9 +99,8 @@ const createParts2and3 = (config) => {
   // all the partials
   const partials = { 
     dbConnection: paths.dbJs.src.dbJsConnectionTemplate, 
-    jsDoc: paths.dbJs.src.jsDocTemplate,
-    appStart: paths.app.src.appStartTemplate,
-    defineAppAndView: paths.app.src.defineAppAndViewTemplate,
+    appStart: paths.appJs.src.appStartTemplate,
+    defineAppAndView: paths.appJs.src.defineAppAndViewTemplate,
   }
 
   // make files for each part
@@ -110,6 +109,7 @@ const createParts2and3 = (config) => {
     const partPaths = paths[`p${partNum}`]
 
     // db.js
+    partials.jsDoc = partPaths.src.jsDocTemplate
     const templateData = Object.assign(partData, { mainTableName, joinTableName, dbName })
     const dbjsContent = renderMustache(partPaths.src.dbJsTemplate, templateData, partials)
     createFile(path.join(partPaths.dest.dbJsDir, 'db.js'), dbjsContent)
