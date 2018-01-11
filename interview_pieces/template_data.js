@@ -23,6 +23,7 @@ const templateData = {
       parameterColumnName: 'flight_number',
       dataColumnName: 'name',
       dataName: 'passenger',
+      mainTableRootName: 'flight',
       sampleDbResult: 
 `[ 
   { name: 'Michael Jackson' },
@@ -51,6 +52,7 @@ const templateData = {
       parameterColumnName: 'name',
       dataColumnName: 'name',
       dataName: 'ingredient',
+      mainTableRootName: 'recipe',
       sampleDbResult: 
 `[ 
   { name: 'flour' },

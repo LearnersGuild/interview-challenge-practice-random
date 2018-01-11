@@ -7,12 +7,12 @@ const {{ dbFuncName }} = ({{ parameterName }}) =>
     SELECT {{ dataName }}s.{{ dataColumnName }}
     FROM {{ dataName }}s
       JOIN {{ joinTableName }}
-        ON {{ dataName }}.id = {{ joinTableName }}.{{ dataName }}_id
+        ON {{ dataName }}s.id = {{ joinTableName }}.{{ dataName }}_id
       JOIN {{ mainTableName }}
-      ON {{ mainTableName }}.id = {{ joinTableName }}.{{ mainTableName }}_id
+      ON {{ mainTableName }}.id = {{ joinTableName }}.{{ mainTableRootName }}_id
     WHERE {{ mainTableName }}.{{ parameterColumnName }} = $1`,
     [{{ parameterName }}])
-    .map(item => item[{{ dataColumnName }}])
+    .then({{ mainTableName }} => {{ mainTableName }}.map(item => item.{{ dataColumnName }}))
 
 module.exports = {
   {{ dbFuncName }},
