@@ -35,7 +35,12 @@ const templateData = {
       endpointDescription: 'flight roster',
       exampleGetData: '1147A',
       buttonName: 'Give passenger a parachute',
-      serverRunningPhrase: flights.serverRunningPhrase
+      serverRunningPhrase: flights.serverRunningPhrase,
+      p2viewTitle: "Flight Roster",
+      p3viewTitleStart: 'Passengers on Flight',
+      buttonId: 'eject-passenger',
+      buttonText: 'Give passenger a parachute',
+      listTitle: 'Passenger Names'
     },
   },
   recipes: {
@@ -58,10 +63,15 @@ const templateData = {
   { name: 'eggs' },
   { name: 'vanilla extract' }
 ]`,
-      endpoint: 'recipe_list',
+      endpoint: 'ingredient_list',
       endpointDescription: 'recipe ingredient list',
       exampleGetData: 'chocolate%20chip%20cookies',
-      buttonName: 'Cut calories'
+      buttonName: 'Cut calories',
+      p2viewTitle: 'Recipe Ingredient List',
+      p3viewTitleStart: 'Ingredients for',
+      buttonId: 'cut-calories',
+      buttonText: 'Adjust recipe',
+      listTitle: 'Recipe Ingredients'
     },
   },
 }

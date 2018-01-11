@@ -1,20 +1,22 @@
+{{=<% %>=}}
+
 html
   head
-    title Version 2 Challenge Part 3
-    link(rel='stylesheet' href='/flight_roster.css')
+    title Practice Phase Challenge Part 3
+    link(rel='stylesheet' href='/<% endpoint %>.css')
   body
-    h1 Passengers on Flight #{flightNumber}
-    button(id='eject-passenger') Give passenger a parachute
+    h1 <% p3viewTitleStart %> #{<% parameterName %>}
+    button(id='<% buttonId %>') <% buttonText %>
     div(id='message')
       p= message
-    table(class='flight-passengers')
+    table(class='<% endpoint %>')
       tr
-        th Passenger Name
-      - if (typeof(passengers) !== 'undefined'){
-        each passenger in passengers
-          tr(class='passenger')
-            td= passenger.name
+        th <% listTitle %>
+      - if (typeof(<% dataName %>s) !== 'undefined'){
+        each <% dataName %> in <% dataName %>s
+          tr(class='<% dataName %>')
+            td= <% dataName %>.name
       -}
     script(src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous")
-    script(src="/flight_roster.js")
+    script(src="/<% endpoint %>.js")
