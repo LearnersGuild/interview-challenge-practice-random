@@ -1,5 +1,3 @@
-\c team_colors
-
 INSERT INTO cities (name) VALUES
   ('San Francisco'),
   ('Oakland'),

@@ -21,7 +21,6 @@ const flights = {
     endpoint: 'flight_roster',
     endpointDescription: 'flight roster',
     exampleGetData: '1147A',
-    buttonName: 'Give passenger a parachute',
     p2viewTitle: "Flight Roster",
     p3viewTitleStart: 'Passengers on Flight',
     buttonId: 'eject-passenger',
@@ -57,11 +56,10 @@ const recipes = {
     endpoint: 'ingredient_list',
     endpointDescription: 'recipe ingredient list',
     exampleGetData: 'chocolate%20chip%20cookies',
-    buttonName: 'Cut calories',
     p2viewTitle: 'Recipe Ingredient List',
     p3viewTitleStart: 'Ingredients for',
     buttonId: 'cut-calories',
-    buttonText: 'Adjust recipe',
+    buttonText: 'Cut calories',
     listTitle: 'Recipe Ingredients'
   },
 }
@@ -88,7 +86,6 @@ const movies = {
     endpoint: 'movie_genres',
     endpointDescription: 'movie genres',
     exampleGetData: 'Avatar',
-    buttonName: 'Remove genre',
     p2viewTitle: 'Movie Genres',
     p3viewTitleStart: 'Genres for',
     buttonId: 'remove-genre',
@@ -101,27 +98,28 @@ const teams = {
   common: {
     serverRunningPhrase: 'Playing ball'
   },
-//   a: {
-//     dbFuncName: ,
-//     parameterName: ,
-//     parameterDescription: ,
-//     parameterColumnName: ,
-//     dataColumnName: ,
-//     dataName: ,
-//     mainTableRootName: ,
-//     sampleDbResult:
-// `
-// `,
-//     endpoint: ,
-//     endpointDescription: ,
-//     exampleGetData: ,
-//     buttonName: ,
-//     p2viewTitle: ,
-//     p3viewTitleStart: ,
-//     buttonId: ,
-//     buttonText: ,
-//     listTitle: '
-//   },    
+  a: {
+    dbFuncName: 'getTeamColors',
+    parameterName: 'teamName',
+    parameterDescription: 'team name',
+    parameterColumnName: 'name',
+    dataColumnName: 'name',
+    dataName: 'color',
+    mainTableRootName: 'team',
+    sampleDbResult:
+`
+  { name: 'blue' },
+  { name: 'gold' }
+`,
+    endpoint: 'team_colors',
+    endpointDescription: 'team colors',
+    exampleGetData: 'Warriors',
+    p2viewTitle: 'Team Colors',
+    p3viewTitleStart: 'Colors for the',
+    buttonId: 'erase-the-rainbow',
+    buttonText: 'Remove color',
+    listTitle: 'Colors'
+  },    
 }
 
 module.exports = {

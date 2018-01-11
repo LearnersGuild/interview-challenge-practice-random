@@ -9,10 +9,6 @@ tables:
         options: PRIMARY KEY
       - name: name
         type: VARCHAR(64)
-    data: 
-      - name: San Francisco
-      - name: Oakland
-      - name: San Jose
   main:
     tablename: teams
     columns:
@@ -27,22 +23,6 @@ tables:
         options: REFERENCES cities
       - name: mascot
         type: VARCHAR(64)
-    data: 
-      - name: Warriors
-        city_id: 2
-        mascot: Thunder
-      - name: Forty-Niners
-        city_id: 1
-        mascot: Sourdough Sam
-      - name: Raiders
-        city_id: 2
-        mascot: Raider Rusher
-      - name: Giants
-        city_id: 1
-        mascot: Lou Seal
-      - name: Athletics
-        city_id: 2
-        mascot: Stomper
   many:
     tablename: colors
     columns:
@@ -51,16 +31,6 @@ tables:
         options: PRIMARY KEY
       - name: name
         type: VARCHAR(64)
-    data: 
-      name: red
-      name: gold
-      name: silver
-      name: black
-      name: green
-      name: white
-      name: orange
-      name: cream
-      name: blue
   join: 
     tablename: teams_colors
     columns:
@@ -73,30 +43,3 @@ tables:
       - name: color_id
         type: INTEGER
         options: REFERENCES colors
-    data: 
-      - team_id: 2
-        color_id: 1
-      - team_id: 2
-        color_id: 2
-      - team_id: 3
-        color_id: 3
-      - team_id: 3
-        color_id: 4
-      - team_id: 5
-        color_id: 2
-      - team_id: 5
-        color_id: 5
-      - team_id: 5
-        color_id: 6
-      - team_id: 4
-        color_id: 7
-      - team_id: 4
-        color_id: 8
-      - team_id: 4
-        color_id: 4
-      - team_id: 4
-        color_id: 2
-      - team_id: 1
-        color_id: 2
-      - team_id: 1
-        color_id: 9
