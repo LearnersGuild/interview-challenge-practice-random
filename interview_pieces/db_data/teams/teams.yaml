@@ -2,7 +2,7 @@
 ---
 tables:
   one:
-    tablename: cities
+    tablename: locations
     columns:
       - name: id
         type: SERIAL

@@ -1,0 +1,15 @@
+Create a function in the file `db.js` called `{{ p1.dbFuncName }}`.
+
+The function should accept two string parameters named `{{ p1.parameter1Name }}` and `{{ p1.parameter2Name }}`. It should use the `pg-promise` database client (already instantiated) and return a promise that resolves to the result of the query (an object containing the id of the added {{ p1.addTableRootName }}. 
+
+Sample result:
+
+```
+{{{ p1.sampleDbResult }}}
+```
+
+- [ ] __5:__ The function takes parameters called `{{ p1.parameter1Name }}` and `{{ p1.parameter2Name }}`.
+- [ ] __10:__ There is a helper function that retrieves the `id` for the `{{ p1.parameter2Name }}`.
+- [ ] __10:__ The result set of the SQL query is an object with the key `id`.
+- [ ] __10:__ After the function runs, there is a new row in the `{{ p1.mainTableRootName }}s` table with the {{ p1.parameter1Description }} `{{ p1.parameter1Name }}`.
+- [ ] __15:__ The new row in the `{{ p1.mainTableRootName }}`s table is associated with the {{ p1.parameter1Description }} `{{ p1.parameter1Name }}`

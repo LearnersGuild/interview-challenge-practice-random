@@ -1,4 +1,4 @@
-INSERT INTO cities (name) VALUES
+INSERT INTO locations (name) VALUES
   ('San Francisco'),
   ('Oakland'),
   ('San Jose')

@@ -27,6 +27,15 @@ const flights = {
     buttonText: 'Give passenger a parachute',
     listTitle: 'Passenger Names'
   },
+  b: {
+    dbFuncName: 'addFlightWithAirline',
+    parameter1Name: 'flightNumber',
+    parameter2Name: 'airlineName',
+    parameter1Description: 'flight number',
+    parameter2Description: 'airline name',
+    mainTableRootName: 'flight',
+    sampleDbResult: `{ id: 4 }`,
+  }
 }
 
 const recipes = {
@@ -62,6 +71,15 @@ const recipes = {
     buttonText: 'Cut calories',
     listTitle: 'Recipe Ingredients'
   },
+  b: {
+    dbFuncName: 'addRecipeWithType',
+    parameter1Name: 'recipeName',
+    parameter2Name: 'typeName',
+    parameter1Description: 'recipe name',
+    parameter2Description: 'type name',
+    mainTableRootName: 'recipe',
+    sampleDbResult: `{ id: 4 }`,
+  }
 }
 
 const movies = {
@@ -91,7 +109,16 @@ const movies = {
     buttonId: 'remove-genre',
     buttonText: 'Remove genre',
     listTitle: 'Genres'
-  },    
+  },
+  b: {
+    dbFuncName: 'addMovieWithLanguage',
+    parameter1Name: 'movieTitle',
+    parameter2Name: 'languageName',
+    parameter1Description: 'movie title',
+    parameter2Description: 'language name',
+    mainTableRootName: 'movie',
+    sampleDbResult: `{ id: 4 }`,
+  }
 }
 
 const teams = {
@@ -119,7 +146,16 @@ const teams = {
     buttonId: 'erase-the-rainbow',
     buttonText: 'Remove color',
     listTitle: 'Colors'
-  },    
+  },
+  b: {
+    dbFuncName: 'addTeamWithLocation',
+    parameter1Name: 'teamName',
+    parameter2Name: 'locationName',
+    parameter1Description: 'team name',
+    parameter2Description: 'location name',
+    mainTableRootName: 'team',
+    sampleDbResult: `{ id: 4 }`,
+  }
 }
 
 module.exports = {
