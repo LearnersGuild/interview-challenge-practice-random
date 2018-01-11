@@ -121,20 +121,24 @@ const constructPaths = (versions, destDir, data, drivePath) => {
     p.dest.appJsFile = path.join(p.dest.rootDir, 'app.js')
 
     // views file paths
-    p.src.pugTemplate = path.join(paths.common.src.viewsDir, `p${partNum}.pug.mustache`)
-    p.src.ejsTemplate = path.join(paths.common.src.viewsDir, `p${partNum}.ejs.mustache`)
-    p.dest.viewsDir = path.join(p.dest.rootDir, 'views')
-    p.dest.pugFile = path.join(p.dest.viewsDir, `${endpointString}.pug`)
-    p.dest.ejsFile = path.join(p.dest.viewsDir, `${endpointString}.ejs`)
-    createDir(p.dest.viewsDir)
+    if (partNum > 1) {
+      p.src.pugTemplate = path.join(paths.common.src.viewsDir, `p${partNum}.pug.mustache`)
+      p.src.ejsTemplate = path.join(paths.common.src.viewsDir, `p${partNum}.ejs.mustache`)
+      p.dest.viewsDir = path.join(p.dest.rootDir, 'views')
+      p.dest.pugFile = path.join(p.dest.viewsDir, `${endpointString}.pug`)
+      p.dest.ejsFile = path.join(p.dest.viewsDir, `${endpointString}.ejs`)
+      createDir(p.dest.viewsDir)
+    }
 
     // public file paths
-    p.src.cssFile = (paths.common.src.publicDir, `p${partNum}.css`)
-    p.src.jsFile = (paths.common.src.publicDir, `p${partNum}.js`)
-    p.dest.publicDir = path.join(p.dest.rootDir, 'public')
-    p.dest.jsFile = path.join(p.dest.publicDir, `${endpointString}.js`)
-    p.dest.cssFile = path.join(p.dest.publicDir, `${endpointString}.css`)
-    createDir(p.dest.publicDir)
+    if (partNum > 2) {
+      p.src.cssFile = (paths.common.src.publicDir, `p${partNum}.css`)
+      p.src.jsFile = (paths.common.src.publicDir, `p${partNum}.js`)
+      p.dest.publicDir = path.join(p.dest.rootDir, 'public')
+      p.dest.jsFile = path.join(p.dest.publicDir, `${endpointString}.js`)
+      p.dest.cssFile = path.join(p.dest.publicDir, `${endpointString}.css`)
+      createDir(p.dest.publicDir)
+    }
  
     // add the generated paths to the larger paths object
     paths[`p${partNum}`] = p
@@ -171,6 +175,8 @@ const generateChallengeConfig = (learnerName) => {
 
   // database config data
   const dbConfig = readYaml(path.join(paths.setup.src.dataDir, `${versions.db}.yaml`))
+  dbConfig.dbName = versions.dbRandomName
+  dbConfig.dbType = versions.db
   
   return {
     data,

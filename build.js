@@ -24,6 +24,8 @@ const createInstructions = (config) => {
   const templateData = Object.assign(data, {
     outputDir: paths.common.dest.rootDir,
     drivePath: paths.common.dest.drivePath,
+    dbType: config.dbConfig.dbType,
+    dbName: config.dbConfig.dbName,
   })
 
   const readmeContents = renderMustache(paths.readme.src.readmeTemplate, templateData, partials)
@@ -80,8 +82,8 @@ const createSetup = (config) => {
  * @param {object} config - configuration for this particular challenge
  */
 const createPart1 = (config) => {
-  const { dbName, paths } = config
-  const dbjsContent = renderMustache(paths.dbJs.src.dbJsConnectionTemplate, { dbName }, { })
+  const { dbConfig, paths } = config
+  const dbjsContent = renderMustache(paths.dbJs.src.dbJsConnectionTemplate, { dbName: dbConfig.dbName }, { })
   createFile(path.join(paths.p1.dest.dbJsDir, 'db.js'), dbjsContent)
 }
 
@@ -94,7 +96,7 @@ const createParts2and3 = (config) => {
   const { dbConfig, paths, data } = config
   const mainTableName = dbConfig.tables.main.tablename
   const joinTableName = dbConfig.tables.join.tablename
-  const dbName = config.dbName
+  const dbName = config.dbConfig.dbName
 
   // all the partials
   const partials = { 
