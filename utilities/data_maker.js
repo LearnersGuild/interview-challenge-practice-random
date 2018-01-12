@@ -166,8 +166,8 @@ const constructPaths = (versions, destDir, data, drivePath) => {
  * @returns {object} - Object containing data for the random version
  */
 const generateChallengeConfig = (learnerName) => {
-  // const drivePath = '/Volumes/INTERVIEW'
-  const drivePath = '/var/tmp/randomInterviews'
+  const drivePath = '/Volumes/INTERVIEW'
+  // const drivePath = '/var/tmp/randomInterviews'
   const outputDir = createOutputDir(drivePath, learnerName)
 
   // get the randomized versions
