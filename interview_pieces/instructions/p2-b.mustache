@@ -1,0 +1,11 @@
+Create a POST route for `{{{ p2.postEndpoint }}}` that receives JSON data and adds a new {{ p2.mainTableRootName }} to the database. Use the {{ p2.dbFuncName }} function provided in `db.js`. __For the purposes of this section, assume the {{ p2.parameter2Description }} already exists in the database.__ Example JSON POST data:
+
+```
+{{{ p2.examplePostData }}}
+```
+
+- [ ] __5:__ Route uses POST
+- [ ] __10:__ Route accesses POST data
+- [ ] __10:__ Route uses {{ p2.dbFuncName }} to add the {{ p2.mainTableRootName }} to the database
+- [ ] __10:__ Successful adding of the {{ p2.mainTableRootName }} returns 200 status and JSON with the key {{ p2.parameter1Name }} (and the appropriate value)
+- [ ] __10:__ Unsuccessful adding of the {{ p2.mainTableRootName }} returns 400 status and JSON containing the key `message` with an error message as the value.

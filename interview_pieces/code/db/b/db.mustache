@@ -1,0 +1,25 @@
+{{> dbConnection}}
+
+{{> jsDoc}}
+
+const {{ helperFuncName }} = ({{ parameter2Name }}) => 
+  db.one(`
+    SELECT id
+    FROM {{ secondaryTableRootName }}s
+    WHERE {{ parameter2ColumnName }} = $1
+  `, [{{ parameter2Name }}])
+
+const {{ dbFuncName }} = ({{ parameter1Name }}, {{ parameter2Name }}) =>
+  {{ helperFuncName }}({{ parameter2Name }})
+  .then(result =>
+    db.one(`
+      INSERT INTO {{ mainTableRootName }}s
+        ({{ parameter1ColumnName }}, {{ secondaryTableRootName }}_id)
+      VALUES ($1, $2)
+      RETURNING id
+    `, [{{ parameter1Name }}, result.id])
+  )
+
+module.exports = {
+  {{ dbFuncName }},
+}

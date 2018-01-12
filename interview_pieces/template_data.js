@@ -29,12 +29,23 @@ const flights = {
   },
   b: {
     dbFuncName: 'addFlightWithAirline',
+    helperFuncName: 'getAirlineId',
     parameter1Name: 'flightNumber',
     parameter2Name: 'airlineName',
     parameter1Description: 'flight number',
     parameter2Description: 'airline name',
+    parameter1ColumnName: 'flight_number',
+    parameter2ColumnName: 'name',
     mainTableRootName: 'flight',
+    secondaryTableRootName: 'airline',
     sampleDbResult: `{ id: 4 }`,
+    postEndpoint: 'flights/add',
+    examplePostData:
+`{
+  "flightNumber": "A589",
+  "airlineName": "Learners Guild Charter Flights"
+}`,
+  endpoint: 'flight_airlines'
   }
 }
 

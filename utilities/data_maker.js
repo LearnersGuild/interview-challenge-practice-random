@@ -9,10 +9,10 @@ const generateRandomVersions = () => {
   const dbs = ['flights', 'teams', 'movies', 'recipes']
   const randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
   const p1 = 'b'
-  const p2 = 'a'
+  const p2 = 'b'
   const p3 = 'a'
   // const db = dbs[Math.floor(Math.random()*dbs.length)]
-  const db = 'recipes'
+  const db = 'flights'
   const dbRandomName = `${db}_${randomString}`
   return {
     p1,
@@ -85,6 +85,7 @@ const constructPaths = (versions, destDir, data, drivePath) => {
   paths.appJs.src.commonDir = path.join(paths.appJs.src.rootDir, 'common')
   paths.appJs.src.appStartTemplate = path.join(paths.appJs.src.commonDir, 'app_start.mustache')
   paths.appJs.src.defineAppAndViewTemplate = path.join(paths.appJs.src.commonDir, 'define_app_and_views.mustache')
+  paths.appJs.src.p2appJs = path.join(paths.appJs.src.commonDir, 'p2-app.mustache')
   
   // db.js common files
   paths.dbJs = {}
@@ -92,7 +93,7 @@ const constructPaths = (versions, destDir, data, drivePath) => {
   paths.dbJs.src.rootDir = path.join(paths.common.src.codeDir, 'db')
   paths.dbJs.src.commonDir = path.join(paths.dbJs.src.rootDir, 'common')
   paths.dbJs.src.dbJsConnectionTemplate = path.join(paths.dbJs.src.commonDir, 'db_connection.mustache')
-  
+
   // construct paths for part-specific directory paths, and create the destination directories
   Array(1, 2, 3).forEach(partNum => {
     const p = {}
@@ -119,8 +120,13 @@ const constructPaths = (versions, destDir, data, drivePath) => {
     createDir(p.dest.dbJsDir)
 
     // app.js file paths
-    p.src.appJsDir = path.join(paths.appJs.src.rootDir, versions[`p${partNum}`])
-    p.src.appJsTemplate = path.join(p.src.appJsDir, `p${partNum}-app.mustache`)
+    if (partNum < 3) {
+      // app.js is version-independent for p2
+      p.src.appJsTemplate = paths.appJs.src.p2appJs
+    } else {
+      p.src.appJsDir = path.join(paths.appJs.src.rootDir, versions[`p${partNum}`])
+      p.src.appJsTemplate = path.join(p.src.appJsDir, `p${partNum}-app.mustache`)
+    }
     p.dest.appJsFile = path.join(p.dest.rootDir, 'app.js')
 
     // views file paths
