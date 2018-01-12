@@ -1,6 +1,6 @@
 Create a function in the file `db.js` called `{{ p1.dbFuncName }}`.
 
-The function should accept one string parameter named `{{ p1.parameter1Name }}` and one number parameter named `{{ p1.parameter2Name }}`. It should use the `pg-promise` database client (already instantiated) and return a promise that resolves to the result of the query (an object containing the `id` of the added {{ p1.mainTableRootName }}). 
+The function should accept one string parameter named `{{ p1.parameter1Name }}` and one number parameter named `{{ p1.parameter2Name }}`. The function should add a row to the `{{ mainTableRootName }}s` table in the databse. It should use the `pg-promise` database client (already instantiated) and return a promise that resolves to the result of the query (an object containing the `id` of the added {{ p1.mainTableRootName }}). 
 
 Sample result:
 
