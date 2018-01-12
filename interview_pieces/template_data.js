@@ -149,7 +149,7 @@ const movies = {
     postEndpoint: 'movies/add',
     examplePostData:
 `{
-  "movieTitle": "The Neverending Story",
+  "movieTitle": "Snakes on a Plane",
   "languageId": 1
 }`,
     p3dbFuncName: 'getLanguageNames',

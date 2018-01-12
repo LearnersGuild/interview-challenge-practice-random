@@ -17,7 +17,7 @@ tables:
     tablename: movies
     columns:
       - name: id
-        type: VARCHAR(128)
+        type: SERIAL
         options: PRIMARY KEY
       - name: title
         type: VARCHAR(128)
@@ -42,7 +42,7 @@ tables:
         type: SERIAL
         options: PRIMARY KEY
       - name: movie_id
-        type: VARCHAR(128)
+        type: INTEGER
         options: REFERENCES movies
       - name: genre_id
         type: INTEGER
