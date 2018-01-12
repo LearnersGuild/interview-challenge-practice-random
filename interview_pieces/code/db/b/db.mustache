@@ -1,7 +1,10 @@
 {{> dbConnection}}
 
-{{> jsDoc}}
-
+/**
+ * Get id for {{ secondaryTableRootName }} with the specified {{ parameter2ColumnName }}
+ * @param {string} {{ parameter2Name }} - {{ parameter2ColumnName }}
+ * @returns {promise} - Promise resolving to an object with the key 'id'
+ */
 const {{ helperFuncName }} = ({{ parameter2Name }}) => 
   db.one(`
     SELECT id
@@ -9,7 +12,8 @@ const {{ helperFuncName }} = ({{ parameter2Name }}) =>
     WHERE {{ parameter2ColumnName }} = $1
   `, [{{ parameter2Name }}])
 
-const {{ dbFuncName }} = ({{ parameter1Name }}, {{ parameter2Name }}) =>
+{{> jsDoc}}
+  const {{ dbFuncName }} = ({{ parameter1Name }}, {{ parameter2Name }}) =>
   {{ helperFuncName }}({{ parameter2Name }})
   .then(result =>
     db.one(`
@@ -20,6 +24,17 @@ const {{ dbFuncName }} = ({{ parameter1Name }}, {{ parameter2Name }}) =>
     `, [{{ parameter1Name }}, result.id])
   )
 
+/**
+ * Get {{ parameter2ColumnName }} of all {{ secondaryTableRootName }}s
+ * @returns {promise} - Promise resolving to array of objects, each with the key '{{ parameter2ColumnName }}'
+ */
+const {{ p3dbFuncName }} = () => 
+  db.query(`
+    SELECT {{ parameter2ColumnName }}
+    FROM {{ secondaryTableRootName }}s
+  `)
+
 module.exports = {
   {{ dbFuncName }},
+  {{ p3dbFuncName }}
 }

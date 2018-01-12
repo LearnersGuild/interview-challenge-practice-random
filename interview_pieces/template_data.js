@@ -45,7 +45,10 @@ const flights = {
   "flightNumber": "A589",
   "airlineName": "Learners Guild Charter Flights"
 }`,
-  endpoint: 'flight_airlines'
+  p3dbFuncName: 'getAirlineNames',
+  endpoint: 'airlines',
+  p3viewTitle: 'Airlines'
+  
   }
 }
 

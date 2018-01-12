@@ -10,7 +10,7 @@ const generateRandomVersions = () => {
   const randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
   const p1 = 'b'
   const p2 = 'b'
-  const p3 = 'a'
+  const p3 = 'b'
   // const db = dbs[Math.floor(Math.random()*dbs.length)]
   const db = 'flights'
   const dbRandomName = `${db}_${randomString}`

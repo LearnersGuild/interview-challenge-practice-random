@@ -6,7 +6,7 @@
 
 app.get('/<%endpoint %>', (req, res) => {
   const <% parameterName %> = req.query.<% parameterName %>;
-  <% dbFuncName %>(<% parameterName %>)
+  db.<% dbFuncName %>(<% parameterName %>)
     .then((<% dataName %>s) => {
       res.render('<% endpoint %>', { <% parameterName %>, <% dataName %>s });
     })

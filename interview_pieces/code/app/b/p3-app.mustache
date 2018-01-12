@@ -1,0 +1,15 @@
+{{=<% %>=}}
+<% >defineAppAndView %>
+
+app.get('/<%endpoint %>', (req, res) => {
+  db.<% p3dbFuncName %>()
+    .then((<% parameter2Name %>s) => {
+      res.render('<% endpoint %>', { <% parameter2Name %>s });
+    })
+    .catch((err) => {
+      res.render('<% endpoint %>', { message: `An error occurred: ${err.toString()}` });
+    })
+    .catch(console.error);
+});
+
+<% >appStart %>

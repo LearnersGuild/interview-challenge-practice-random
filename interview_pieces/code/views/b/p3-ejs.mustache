@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Practice Phase Challenge Part 3</title>
+  <link rel="stylesheet" href="/{{ endpoint }}.css">
+</head>
+
+<body>
+  <h1>{{ p3viewTitle }} %> </h1>
+  <div id="message">
+    <p>
+      <% if (locals.message) { %>
+        <%= message %>
+      <% } %>
+      </p>
+  </div>
+  <ul>
+    <% if (locals.{{ parameter2Name }}s) { %>
+      <% for (var {{ parameter2Name }} of {{ parameter2Name }}s) { %>
+        <li class="{{ parameter2Name }}">
+          <%= {{ parameter2Name }}.{{ parameter2ColumnName }} %>
+        </li>
+      <% } %>
+    <% } %>
+  </ul>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <script src="/{{ endpoint }}.js"></script>
+</body>
+
+</html>
