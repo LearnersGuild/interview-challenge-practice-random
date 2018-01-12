@@ -87,13 +87,27 @@ const recipes = {
   },
   b: {
     dbFuncName: 'addRecipeWithType',
+    helperFuncName: 'getTypeId',
     parameter1Name: 'recipeName',
     parameter2Name: 'typeName',
     parameter1Description: 'recipe name',
     parameter2Description: 'type name',
+    parameter1ColumnName: 'name',
+    parameter2ColumnName: 'name',
     mainTableRootName: 'recipe',
+    secondaryTableRootName: 'type',
     sampleDbResult: `{ id: 4 }`,
-  }
+    postEndpoint: 'recipes/add',
+    examplePostData:
+`{
+  "recipeName": "Pineapple Upside-Down Cake",
+  "typeName": "cake"
+}`,
+  p3dbFuncName: 'getRecipeTypes',
+  endpoint: 'recipe_types',
+  p3viewTitle: 'Recipe Types'
+  
+  },
 }
 
 const movies = {

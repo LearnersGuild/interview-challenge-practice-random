@@ -12,7 +12,7 @@ const generateRandomVersions = () => {
   const p2 = 'b'
   const p3 = 'b'
   // const db = dbs[Math.floor(Math.random()*dbs.length)]
-  const db = 'flights'
+  const db = 'recipes'
   const dbRandomName = `${db}_${randomString}`
   return {
     p1,
