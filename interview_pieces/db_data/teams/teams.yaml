@@ -17,10 +17,9 @@ tables:
         options: PRIMARY KEY
       - name: name
         type: VARCHAR(64)
-        options: UNIQUE
-      - name: city_id
+      - name: location_id
         type: INTEGER
-        options: REFERENCES cities
+        options: REFERENCES locations
       - name: mascot
         type: VARCHAR(64)
   many:

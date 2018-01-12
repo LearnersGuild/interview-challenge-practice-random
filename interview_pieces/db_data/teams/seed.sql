@@ -16,7 +16,7 @@ INSERT INTO colors (name) VALUES
   ('blue')
 ;
 
-INSERT INTO teams (name, city_id, mascot) VALUES
+INSERT INTO teams (name, location_id, mascot) VALUES
   ('Warriors', 2, 'Thunder'),
   ('Forty-Niners', 1, 'Sourdough Sam'),
   ('Raiders', 2, 'Raider Rusher'),

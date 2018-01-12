@@ -17,10 +17,10 @@
       </p>
   </div>
   <ul>
-    <% if (locals.{{ parameter2Name }}s) { %>
-      <% for (var {{ parameter2Name }} of {{ parameter2Name }}s) { %>
-        <li class="{{ parameter2Name }}">
-          <%= {{ parameter2Name }}.{{ parameter2ColumnName }} %>
+    <% if (locals.{{ secondaryTableRootName }}s) { %>
+      <% for (var {{ secondaryTableRootName }} of {{ secondaryTableRootName }}s) { %>
+        <li class="{{ secondaryTableRootName }}">
+          <%= {{ secondaryTableRootName }}.{{ p3columnName }} %>
         </li>
       <% } %>
     <% } %>

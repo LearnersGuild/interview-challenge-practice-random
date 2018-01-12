@@ -22,7 +22,6 @@ tables:
         options: PRIMARY KEY
       - name: name
         type: VARCHAR(64)
-        options: UNIQUE
       - name: type_id
         type: INTEGER
         options: REFERENCES types

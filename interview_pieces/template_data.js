@@ -29,13 +29,11 @@ const flights = {
   },
   b: {
     dbFuncName: 'addFlightWithAirline',
-    helperFuncName: 'getAirlineId',
     parameter1Name: 'flightNumber',
-    parameter2Name: 'airlineName',
+    parameter2Name: 'airlineId',
     parameter1Description: 'flight number',
-    parameter2Description: 'airline name',
+    parameter2Description: 'airline id',
     parameter1ColumnName: 'flight_number',
-    parameter2ColumnName: 'name',
     mainTableRootName: 'flight',
     secondaryTableRootName: 'airline',
     sampleDbResult: `{ id: 4 }`,
@@ -43,12 +41,13 @@ const flights = {
     examplePostData:
 `{
   "flightNumber": "A589",
-  "airlineName": "Learners Guild Charter Flights"
+  "airlineId": 1
 }`,
   p3dbFuncName: 'getAirlineNames',
+  p3columnName: 'name',
   endpoint: 'airlines',
-  p3viewTitle: 'Airlines'
-  
+  p3itemDescription: 'airline',
+  p3viewTitle: 'Airlines',
   }
 }
 
@@ -87,13 +86,11 @@ const recipes = {
   },
   b: {
     dbFuncName: 'addRecipeWithType',
-    helperFuncName: 'getTypeId',
     parameter1Name: 'recipeName',
-    parameter2Name: 'typeName',
+    parameter2Name: 'typeId',
     parameter1Description: 'recipe name',
-    parameter2Description: 'type name',
+    parameter2Description: 'type id',
     parameter1ColumnName: 'name',
-    parameter2ColumnName: 'name',
     mainTableRootName: 'recipe',
     secondaryTableRootName: 'type',
     sampleDbResult: `{ id: 4 }`,
@@ -101,12 +98,13 @@ const recipes = {
     examplePostData:
 `{
   "recipeName": "Pineapple Upside-Down Cake",
-  "typeName": "cake"
+  "typeId": 1
 }`,
-  p3dbFuncName: 'getRecipeTypes',
-  endpoint: 'recipe_types',
-  p3viewTitle: 'Recipe Types'
-  
+    p3dbFuncName: 'getRecipeTypes',
+    p3columnName: 'name',
+    endpoint: 'recipe_types',
+    p3itemDescription: 'recipe type',
+    p3viewTitle: 'Recipe Types'
   },
 }
 
@@ -141,11 +139,24 @@ const movies = {
   b: {
     dbFuncName: 'addMovieWithLanguage',
     parameter1Name: 'movieTitle',
-    parameter2Name: 'languageName',
+    parameter2Name: 'languageId',
     parameter1Description: 'movie title',
-    parameter2Description: 'language name',
+    parameter2Description: 'language id',
+    parameter1ColumnName: 'title',
     mainTableRootName: 'movie',
+    secondaryTableRootName: 'language',
     sampleDbResult: `{ id: 4 }`,
+    postEndpoint: 'movies/add',
+    examplePostData:
+`{
+  "movieTitle": "The Neverending Story",
+  "languageId": 1
+}`,
+    p3dbFuncName: 'getLanguageNames',
+    p3columnName: 'name',
+    endpoint: 'languages',
+    p3itemDescription: 'movie language',
+    p3viewTitle: 'Movie Languages'
   }
 }
 
@@ -178,11 +189,24 @@ const teams = {
   b: {
     dbFuncName: 'addTeamWithLocation',
     parameter1Name: 'teamName',
-    parameter2Name: 'locationName',
+    parameter2Name: 'locationId',
     parameter1Description: 'team name',
-    parameter2Description: 'location name',
+    parameter2Description: 'location id',
+    parameter1ColumnName: 'name',
     mainTableRootName: 'team',
+    secondaryTableRootName: 'location',
     sampleDbResult: `{ id: 4 }`,
+    postEndpoint: 'teams/add',
+    examplePostData:
+`{
+  "teamName": "Bad News Bears",
+  "locationId": 1
+}`,
+    p3dbFuncName: 'getLocationNames',
+    p3columnName: 'name',
+    endpoint: 'locations',
+    p3itemDescription: 'team location',
+    p3viewTitle: 'Team Locations'
   }
 }
 

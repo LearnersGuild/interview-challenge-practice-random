@@ -10,9 +10,9 @@ html
       p= message
     table(class='<% endpoint %>')
       ul
-      - if (typeof(<% parameter2Name %>s) !== 'undefined'){
-        each <% parameter2Name %> in <% parameter2Name %>s
-          li(class='<% parameter2Name %>')= <% parameter2Name %>.<% parameter2ColumnName %>
+      - if (typeof(<% secondaryTableRootName %>s) !== 'undefined'){
+        each <% secondaryTableRootName %> in <% secondaryTableRootName %>s
+          li(class='<% secondaryTableRootName %>')= <% secondaryTableRootName %>.<% p3columnName %>
       -}
     script(src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous")

@@ -1,36 +1,22 @@
 {{> dbConnection}}
 
-/**
- * Get id for {{ secondaryTableRootName }} with the specified {{ parameter2ColumnName }}
- * @param {string} {{ parameter2Name }} - {{ parameter2ColumnName }}
- * @returns {promise} - Promise resolving to an object with the key 'id'
- */
-const {{ helperFuncName }} = ({{ parameter2Name }}) => 
-  db.one(`
-    SELECT id
-    FROM {{ secondaryTableRootName }}s
-    WHERE {{ parameter2ColumnName }} = $1
-  `, [{{ parameter2Name }}])
-
 {{> jsDoc}}
-  const {{ dbFuncName }} = ({{ parameter1Name }}, {{ parameter2Name }}) =>
-  {{ helperFuncName }}({{ parameter2Name }})
-  .then(result =>
-    db.one(`
-      INSERT INTO {{ mainTableRootName }}s
-        ({{ parameter1ColumnName }}, {{ secondaryTableRootName }}_id)
-      VALUES ($1, $2)
-      RETURNING id
-    `, [{{ parameter1Name }}, result.id])
-  )
+
+const {{ dbFuncName }} = ({{ parameter1Name }}, {{ parameter2Name }}) =>
+  db.one(`
+    INSERT INTO {{ mainTableRootName }}s
+      ({{ parameter1ColumnName }}, {{ secondaryTableRootName }}_id)
+    VALUES ($1, $2)
+    RETURNING id
+  `, [{{ parameter1Name }}, {{ parameter2Name }}])
 
 /**
- * Get {{ parameter2ColumnName }} of all {{ secondaryTableRootName }}s
- * @returns {promise} - Promise resolving to array of objects, each with the key '{{ parameter2ColumnName }}'
+ * Get {{ p3columnName }} for all {{ secondaryTableRootName }}s
+ * @returns {promise} - Promise resolving to array of objects, each with the key '{{ p3columnName }}'
  */
 const {{ p3dbFuncName }} = () => 
   db.query(`
-    SELECT {{ parameter2ColumnName }}
+    SELECT {{ p3columnName }}
     FROM {{ secondaryTableRootName }}s
   `)
 
