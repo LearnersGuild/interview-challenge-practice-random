@@ -76,6 +76,21 @@ d: {
   id: 2, count: 3,
   id: 3, count: 5
 }`
+},
+e: {
+  dbFuncName: 'getFlightsForAirline',
+  parameterName: 'airlineName',
+  parameterDescription: 'airline name',
+  mainTableRootName: 'flight',
+  dataColumnName: 'flight_number',
+  secondaryTableRootName: 'airline',
+  sampleDbResult:
+`{
+  flight_number: '1147A',
+  flight_number: '8896',
+  flight_number: '8422B',
+  flight_number: '4'
+}`,
   }
 }
 
