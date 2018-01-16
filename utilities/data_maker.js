@@ -8,11 +8,11 @@ const { readYaml, createDir, createOutputDir } = require('../utilities/file_util
 const generateRandomVersions = () => {
   const dbs = ['flights', 'teams', 'movies', 'recipes']
   const randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
-  const p1 = 'b'
+  const p1 = 'c'
   const p2 = 'b'
   const p3 = 'b'
   // const db = dbs[Math.floor(Math.random()*dbs.length)]
-  const db = 'movies'
+  const db = 'flights'
   const dbRandomName = `${db}_${randomString}`
   return {
     p1,
@@ -166,8 +166,8 @@ const constructPaths = (versions, destDir, data, drivePath) => {
  * @returns {object} - Object containing data for the random version
  */
 const generateChallengeConfig = (learnerName) => {
-  const drivePath = '/Volumes/INTERVIEW'
-  // const drivePath = '/var/tmp/randomInterviews'
+  // const drivePath = '/Volumes/INTERVIEW'
+  const drivePath = '/var/tmp/randomInterviews'
   const outputDir = createOutputDir(drivePath, learnerName)
 
   // get the randomized versions

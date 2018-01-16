@@ -50,6 +50,18 @@ const flights = {
   p3viewTitle: 'Airlines',
   },
 c: {
+  dbFuncName: 'getFlightsForAirline',
+  parameterName: 'airlineId',
+  mainTableRootName: 'flight',
+  dataColumnName: 'flight_number',
+  secondaryTableRootName: 'airline',
+  sampleDbResult:
+`{
+  flight_number: '1147A',
+  flight_number: '8896',
+  flight_number: '8422B',
+  flight_number: '4'
+}`,
 
 },
 d: {
@@ -57,6 +69,7 @@ d: {
   dataTableRootName: 'airline',
   parameterName: 'airlineId',
   joinTableRootName: 'flight',
+  mainTableColumnName: 'number',
   sampleDbResult:
 `{
   id: 1, count: 4,

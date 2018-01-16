@@ -1,0 +1,15 @@
+Create a function in the file `db.js` called `{{ p1.dbFuncName }}`.
+
+The function should accept a number parameter named `{{ p1.parameterName }}` and run a query to find the {{ p1.dataColumnName }}s associated with that `{{ p1.parameterName }}`. It should use the `pg-promise` database client (already instantiated) and return a promise that resolves to the result of the query (an array of objects containing the {{ p1.dataColumnName }}s of all {{ p1.mainTableRootName }}s for the specified {{ p1.secondaryTableRootName }} id).
+
+Sample result:
+
+```
+{{{ p1.sampleDbResult }}}
+```
+
+- [ ] __5:__ The function takes a parameter called `{{ p1.parameterName }}`.
+- [ ] __5:__ The function executes a SQL query using `pg-promise`.
+- [ ] __5:__ The query uses index variables (e.g. `$1`) to make the query dynamic.
+- [ ] __5:__ The function returns a promise which resolves to the result of the query.
+- [ ] __20:__ The result set of the SQL query includes the {{ p1.dataColumnName }} for every {{ p1.mainTableRootName }} that matches the specified {{ p1.secondaryTableRootName }} id.
