@@ -9,7 +9,7 @@ const generateRandomVersions = () => {
   const dbs = ['flights', 'teams', 'movies', 'recipes']
   const randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
   const p1 = 'c'
-  const p2 = 'b'
+  const p2 = 'c'
   const p3 = 'b'
   // const db = dbs[Math.floor(Math.random()*dbs.length)]
   const db = 'flights'
@@ -101,7 +101,7 @@ const constructPaths = (versions, destDir, data, drivePath) => {
     p.dest = {}
     
     // used in destination filenames
-    const endpointString = data[versions.db][versions[`p${partNum}`]].endpoint
+    const endpointFilesBaseName = data[versions.db][versions[`p${partNum}`]].endpointFilesBaseName
     
     // top level destination part directory
     const partDir = `part-${partNum}`
@@ -135,8 +135,8 @@ const constructPaths = (versions, destDir, data, drivePath) => {
       p.src.pugTemplate = path.join(p.src.viewsDir, `p${partNum}-pug.mustache`)
       p.src.ejsTemplate = path.join(p.src.viewsDir, `p${partNum}-ejs.mustache`)
       p.dest.viewsDir = path.join(p.dest.rootDir, 'views')
-      p.dest.pugFile = path.join(p.dest.viewsDir, `${endpointString}.pug`)
-      p.dest.ejsFile = path.join(p.dest.viewsDir, `${endpointString}.ejs`)
+      p.dest.pugFile = path.join(p.dest.viewsDir, `${endpointFilesBaseName}.pug`)
+      p.dest.ejsFile = path.join(p.dest.viewsDir, `${endpointFilesBaseName}.ejs`)
       createDir(p.dest.viewsDir)
     }
 
@@ -146,8 +146,8 @@ const constructPaths = (versions, destDir, data, drivePath) => {
       p.src.cssTemplate = path.join(p.src.publicDir, `p${partNum}-css.mustache`)
       p.src.jsTemplate = path.join(p.src.publicDir, `p${partNum}-js.mustache`)
       p.dest.publicDir = path.join(p.dest.rootDir, 'public')
-      p.dest.jsFile = path.join(p.dest.publicDir, `${endpointString}.js`)
-      p.dest.cssFile = path.join(p.dest.publicDir, `${endpointString}.css`)
+      p.dest.jsFile = path.join(p.dest.publicDir, `${endpointFilesBaseName}.js`)
+      p.dest.cssFile = path.join(p.dest.publicDir, `${endpointFilesBaseName}.css`)
       createDir(p.dest.publicDir)
     }
  

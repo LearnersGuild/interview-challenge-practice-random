@@ -1,0 +1,22 @@
+{{=<% %>=}}
+
+html
+  head
+    title Practice Phase Challenge Part 3
+    link(rel='stylesheet' href='/<% endpoint %>.css')
+  body
+    h1 <% p3viewTitleStart %> #{<% parameterName %>}
+    button(id='<% buttonId %>') <% buttonText %>
+    div(id='message')
+      p= message
+    table(class='<% endpoint %>')
+      tr
+        th <% listTitle %>
+      - if (typeof(<% dataName %>s) !== 'undefined'){
+        each <% dataName %> in <% dataName %>s
+          tr(class='<% dataName %>')
+            td= <% dataName %>
+      -}
+    script(src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous")
+    script(src="/<% endpoint %>.js")

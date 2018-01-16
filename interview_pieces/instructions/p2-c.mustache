@@ -1,0 +1,9 @@
+##### GET route
+
+Implement handling for a route/endpoint `GET {{{ p2.endpoint }}}`. Use the `{{ p2.dbFuncName }}` function provided in `db.js` to retrieve the list of {{ p2.dataColumnDescription }}s for the specified {{ p2.secondaryTableName }} id, and use the result to render the data in the templating framework of your choice (Pug or EJS).
+
+- [ ] __5:__ Route is a GET route
+- [ ] __10:__ Route accesses the `{{ p2.parameterName }}` URL variable.
+- [ ] __10:__ Route uses `{{ p2.dbFuncName }}` function to retrieve the {{ p2.dataColumnDescription }} data
+- [ ] __15:__ Route uses `{{ p2.endpointFilesBaseName }}.ejs` or `{{ p2.endpointFilesBaseName }}.pug` to render the list of {{ p2.dataColumnDescription }}s retrieved.
+- [ ] __10:__ A `GET {{{ p2.endpoint }}}` request can be executed using a browser without error.

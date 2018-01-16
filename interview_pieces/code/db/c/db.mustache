@@ -1,0 +1,14 @@
+{{> dbConnection}}
+
+{{> jsDoc}}
+
+const {{ dbFuncName }} = ({{ parameterName }}) =>
+  db.query(`
+    SELECT {{ dataColumnName }}
+    FROM {{ mainTableRootName }}s
+    WHERE {{ secondaryTableRootName }}_id = $1`,
+    [{{ parameterName }}])
+
+module.exports = {
+  {{ dbFuncName }},
+}

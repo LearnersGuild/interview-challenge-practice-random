@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Practice Phase Challenge Part 3</title>
+  <link rel="stylesheet" href="/{{ endpoint }}.css">
+</head>
+
+<body>
+  <h1>{{ p3viewTitleStart }} <%= {{ parameterName }} %> </h1>
+  <button id="{{ buttonId }}">{{ buttonText }}</button>
+  <div id="message">
+    <p>
+      <% if (locals.message) { %>
+        <%= message %>
+      <% } %>
+      </p>
+  </div>
+  <table class="{{ endpoint }}">
+    <tr>
+      <th>{{ listTitle }}</th>
+    </tr>
+    <% if (locals.{{ dataName }}s) { %>
+      <% for (var {{ dataName }} of {{ dataName }}s) { %>
+        <tr class="{{ dataName }}">
+          <td>
+            <%= {{ dataName }} %>
+          </td>
+        </tr>
+      <% } %>
+    <% } %>
+  </table>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <script src="/{{ endpoint }}.js"></script>
+</body>
+
+</html>

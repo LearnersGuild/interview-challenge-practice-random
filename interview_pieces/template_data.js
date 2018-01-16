@@ -19,6 +19,7 @@ const flights = {
 { name: 'Scary Spice' } 
 ]`,
     endpoint: 'flight_roster',
+    endpointFilesBaseName: 'flight_roster',
     endpointDescription: 'flight roster',
     exampleGetData: '1147A',
     p2viewTitle: "Flight Roster",
@@ -46,6 +47,7 @@ const flights = {
   p3dbFuncName: 'getAirlineNames',
   p3columnName: 'name',
   endpoint: 'airlines',
+  endpointFilesBaseName: 'airlines',
   p3itemDescription: 'airline',
   p3viewTitle: 'Airlines',
   },
@@ -54,6 +56,7 @@ c: {
   parameterName: 'airlineId',
   mainTableRootName: 'flight',
   dataColumnName: 'flight_number',
+  dataColumnDescription: 'flight number',
   secondaryTableRootName: 'airline',
   sampleDbResult:
 `{
@@ -62,7 +65,9 @@ c: {
   flight_number: '8422B',
   flight_number: '4'
 }`,
-
+  endpoint: '/airlines/:airlineId/flights',
+  endpointFilesBaseName: 'airline_flights',
+  viewTitle: 'Airline flights',
 },
 d: {
   dbFuncName: 'getAirlineFlightCounts',
@@ -72,9 +77,9 @@ d: {
   mainTableColumnName: 'number',
   sampleDbResult:
 `{
-  id: 1, count: 4,
-  id: 2, count: 3,
-  id: 3, count: 5
+  id: 1, count: 3,
+  id: 2, count: 2,
+  id: 3, count: 4
 }`
 },
 e: {
@@ -119,6 +124,7 @@ const recipes = {
 { name: 'vanilla extract' }
 ]`,
     endpoint: 'ingredient_list',
+    endpointFilesBaseName: 'ingredient_list',
     endpointDescription: 'recipe ingredient list',
     exampleGetData: 'chocolate%20chip%20cookies',
     p2viewTitle: 'Recipe Ingredient List',
@@ -146,6 +152,7 @@ const recipes = {
     p3dbFuncName: 'getRecipeTypes',
     p3columnName: 'name',
     endpoint: 'recipe_types',
+    endpointFilesBaseName: 'recipe_types',
     p3itemDescription: 'recipe type',
     p3viewTitle: 'Recipe Types'
   },
@@ -175,6 +182,7 @@ const movies = {
 ]
 `,
     endpoint: 'movie_genres',
+    endpointFilesBaseName: 'movie_genres',
     endpointDescription: 'movie genres',
     exampleGetData: 'Avatar',
     p2viewTitle: 'Movie Genres',
@@ -202,6 +210,7 @@ const movies = {
     p3dbFuncName: 'getLanguageNames',
     p3columnName: 'name',
     endpoint: 'languages',
+    endpointFilesBaseName: 'languages',
     p3itemDescription: 'movie language',
     p3viewTitle: 'Movie Languages'
   },
@@ -228,6 +237,7 @@ const teams = {
   { name: 'gold' }
 `,
     endpoint: 'team_colors',
+    endpointFilesBaseName: 'team_colors',
     endpointDescription: 'team colors',
     exampleGetData: 'Warriors',
     p2viewTitle: 'Team Colors',
@@ -255,6 +265,7 @@ const teams = {
     p3dbFuncName: 'getLocationNames',
     p3columnName: 'name',
     endpoint: 'locations',
+    endpointFilesBaseName: 'locations',
     p3itemDescription: 'team location',
     p3viewTitle: 'Team Locations'
   },
