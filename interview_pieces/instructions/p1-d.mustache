@@ -1,0 +1,9 @@
+Create a function in the file `db.js` called `{{ p1.dbFuncName }}`
+
+The function should take one number parameter, `{{ p1.parameterName }}` representing the id of a(n) {{ p1.dataTableRootName }}. The function will run a query to determine the number of {{ p1.joinTableRootName }}s for the specified {{ p1.dataTableRootName }} id. It should use the `pg-promise` database client (already instantiated) and return a promise resolving to the results of the query (an array of objects, each with two keys: `id` and `count`). 
+
+Sample result: 
+
+```
+{{{ p1.sampleDbResult }}}
+```

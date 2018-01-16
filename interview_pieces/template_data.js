@@ -48,6 +48,21 @@ const flights = {
   endpoint: 'airlines',
   p3itemDescription: 'airline',
   p3viewTitle: 'Airlines',
+  },
+c: {
+
+},
+d: {
+  dbFuncName: 'getAirlineFlightCounts',
+  dataTableRootName: 'airline',
+  parameterName: 'airlineId',
+  joinTableRootName: 'flight',
+  sampleDbResult:
+`{
+  id: 1, count: 4,
+  id: 2, count: 3,
+  id: 3, count: 5
+}`
   }
 }
 
@@ -106,6 +121,10 @@ const recipes = {
     p3itemDescription: 'recipe type',
     p3viewTitle: 'Recipe Types'
   },
+  c: {
+
+
+  }
 }
 
 const movies = {
@@ -157,6 +176,9 @@ const movies = {
     endpoint: 'languages',
     p3itemDescription: 'movie language',
     p3viewTitle: 'Movie Languages'
+  },
+  c: {
+
   }
 }
 
@@ -207,6 +229,9 @@ const teams = {
     endpoint: 'locations',
     p3itemDescription: 'team location',
     p3viewTitle: 'Team Locations'
+  },
+  c: {
+    
   }
 }
 
