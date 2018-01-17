@@ -3,20 +3,17 @@
 html
   head
     title Practice Phase Challenge Part 3
-    link(rel='stylesheet' href='/<% endpoint %>.css')
+    link(rel='stylesheet' href='/<% endpointFilesBaseName %>.css')
   body
-    h1 <% p3viewTitleStart %> #{<% parameterName %>}
-    button(id='<% buttonId %>') <% buttonText %>
+    h1 <% viewTitle %>
+    button(id='<% buttonId %>') Add <% mainTableRootName %>
     div(id='message')
       p= message
-    table(class='<% endpoint %>')
-      tr
-        th <% listTitle %>
-      - if (typeof(<% dataName %>s) !== 'undefined'){
-        each <% dataName %> in <% dataName %>s
-          tr(class='<% dataName %>')
-            td= <% dataName %>
+    ul(class='<% endpointFilesBaseName %>')
+      - if (typeof(<% mainTableRootName %>s) !== 'undefined'){
+        each <% mainTableRootName %> in <% mainTableRootName %>s
+          li(class='<% mainTableRootName %>')= <% mainTableRootName %>.<% dataColumnName %>
       -}
     script(src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous")
-    script(src="/<% endpoint %>.js")
+    script(src="/<% endpointFilesBaseName %>.js")

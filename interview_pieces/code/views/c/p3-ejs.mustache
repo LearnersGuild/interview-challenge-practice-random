@@ -4,12 +4,12 @@
 <head>
   <meta charset="utf-8">
   <title>Practice Phase Challenge Part 3</title>
-  <link rel="stylesheet" href="/{{ endpoint }}.css">
+  <link rel="stylesheet" href="/{{ endpointFilesBaseName }}.css">
 </head>
 
 <body>
-  <h1>{{ p3viewTitleStart }} <%= {{ parameterName }} %> </h1>
-  <button id="{{ buttonId }}">{{ buttonText }}</button>
+  <h1>{{ viewTitle }} </h1>
+  <button id="{{ buttonId }}">Add {{ mainTableRootName }}</button>
   <div id="message">
     <p>
       <% if (locals.message) { %>
@@ -17,24 +17,19 @@
       <% } %>
       </p>
   </div>
-  <table class="{{ endpoint }}">
-    <tr>
-      <th>{{ listTitle }}</th>
-    </tr>
-    <% if (locals.{{ dataName }}s) { %>
-      <% for (var {{ dataName }} of {{ dataName }}s) { %>
-        <tr class="{{ dataName }}">
-          <td>
-            <%= {{ dataName }} %>
-          </td>
-        </tr>
+  <ul class="{{ endpointFilesBaseName }}">
+    <% if (locals.{{ mainTableRootName }}s) { %>
+      <% for (var {{ mainTableRootName }} of {{ mainTableRootName }}s) { %>
+        <li class="{{ mainTableRootName }}">
+          <%= {{ mainTableRootName }}.{{ dataColumnName }} %>
+        </li>
       <% } %>
     <% } %>
-  </table>
+  </ul>
 
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
     crossorigin="anonymous"></script>
-  <script src="/{{ endpoint }}.js"></script>
+  <script src="/{{ endpointFilesBaseName }}.js"></script>
 </body>
 
 </html>

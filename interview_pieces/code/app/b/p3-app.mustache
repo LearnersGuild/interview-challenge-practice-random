@@ -2,7 +2,7 @@
 <% >defineAppAndView %>
 
 app.get('/<%endpoint %>', (req, res) => {
-  db.<% p3dbFuncName %>()
+  <% p3dbFuncName %>()
     .then((<% secondaryTableRootName %>s) => {
       res.render('<% endpoint %>', { <% secondaryTableRootName %>s });
     })

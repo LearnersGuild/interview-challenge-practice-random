@@ -67,7 +67,9 @@ c: {
 }`,
   endpoint: '/airlines/:airlineId/flights',
   endpointFilesBaseName: 'airline_flights',
+  endpointExample: '/airlines/3/flights',
   viewTitle: 'Airline flights',
+  buttonId: 'add-flight',
 },
 d: {
   dbFuncName: 'getAirlineFlightCounts',
