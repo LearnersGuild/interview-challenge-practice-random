@@ -76,7 +76,7 @@ d: {
   dataTableRootName: 'airline',
   parameterName: 'airlineId',
   joinTableRootName: 'flight',
-  mainTableColumnName: 'number',
+  mainTableColumnName: 'flight_number',
   sampleDbResult:
 `{
   id: 1, count: 3,
@@ -159,8 +159,48 @@ const recipes = {
     p3viewTitle: 'Recipe Types'
   },
   c: {
-
-
+    dbFuncName: 'getRecipesForType',
+    parameterName: 'typeId',
+    mainTableRootName: 'recipe',
+    dataColumnName: 'name',
+    dataColumnDescription: 'recipe name',
+    secondaryTableRootName: 'type',
+    sampleDbResult:
+`{
+  name: 'chocolate chip cookies',
+  name: 'peanut butter cookies'
+}`,
+    endpoint: '/types/:typeId/recipes',
+    endpointFilesBaseName: 'type_recipes',
+    endpointExample: '/types/3/recipes',
+    viewTitle: 'Type recipes',
+    buttonId: 'add-recipe',
+  },
+  d: {
+    dbFuncName: 'getTypeRecipeCounts',
+    dataTableRootName: 'type',
+    parameterName: 'typeId',
+    joinTableRootName: 'recipe',
+    mainTableColumnName: 'name',
+    sampleDbResult:
+`{
+  id: 1, count: 1,
+  id: 2, count: 2,
+  id: 3, count: 1
+}`
+  },
+  e: {
+    dbFuncName: 'getRecipesForType',
+    parameterName: 'typeName',
+    parameterDescription: 'type name',
+    mainTableRootName: 'recipe',
+    dataColumnName: 'name',
+    secondaryTableRootName: 'type',
+    sampleDbResult:
+`{
+  name: 'chocolate chip cookies',
+  name: 'peanut butter cookies'
+}`,
   }
 }
 
@@ -217,7 +257,48 @@ const movies = {
     p3viewTitle: 'Movie Languages'
   },
   c: {
-
+    dbFuncName: 'getMoviesForLanguage',
+    parameterName: 'languageId',
+    mainTableRootName: 'movie',
+    dataColumnName: 'title',
+    dataColumnDescription: 'movie title',
+    secondaryTableRootName: 'language',
+    sampleDbResult:
+`{
+  name: 'In a Better World',
+  name: 'Babette\'s Feast',
+}`,
+    endpoint: '/languages/:languageId/movies',
+    endpointFilesBaseName: 'language_movies',
+    endpointExample: '/languages/3/movies',
+    viewTitle: 'Movies',
+    buttonId: 'add-movie',
+  },
+  d: {
+    dbFuncName: 'getlanguageMovieCounts',
+    dataTableRootName: 'language',
+    parameterName: 'languageId',
+    joinTableRootName: 'movie',
+    mainTableColumnName: 'number',
+    sampleDbResult:
+`{
+  id: 1, count: 3,
+  id: 2, count: 2,
+  id: 3, count: 4
+}`
+  },
+  e: {
+    dbFuncName: 'getmoviesForLanguage',
+    parameterName: 'languageName',
+    parameterDescription: 'language title',
+    mainTableRootName: 'movie',
+    dataColumnName: 'title',
+    secondaryTableRootName: 'language',
+    sampleDbResult:
+`{
+  name: 'In a Better World',
+  name: 'Babette\'s Feast',
+}`,
   }
 }
 
@@ -272,7 +353,50 @@ const teams = {
     p3viewTitle: 'Team Locations'
   },
   c: {
-    
+    dbFuncName: 'getTeamsForLocation',
+    parameterName: 'locationId',
+    mainTableRootName: 'team',
+    dataColumnName: 'name',
+    dataColumnDescription: 'team name',
+    secondaryTableRootName: 'location',
+    sampleDbResult:
+`{
+  name: 'Warriors',
+  name: 'Raiders',
+  name: 'Athletics'
+}`,
+    endpoint: '/locations/:locationId/teams',
+    endpointFilesBaseName: 'location_teams',
+    endpointExample: '/locations/3/teams',
+    viewTitle: 'location teams',
+    buttonId: 'add-team',
+  },
+  d: {
+    dbFuncName: 'getLocationTeamCounts',
+    dataTableRootName: 'location',
+    parameterName: 'locationId',
+    joinTableRootName: 'team',
+    mainTableColumnName: 'name',
+    sampleDbResult:
+`{
+  id: 1, count: 3,
+  id: 2, count: 2,
+  id: 3, count: 4
+}`
+  },
+  e: {
+    dbFuncName: 'getTeamsForLocation',
+    parameterName: 'locationName',
+    parameterDescription: 'location name',
+    mainTableRootName: 'team',
+    dataColumnName: 'name',
+    secondaryTableRootName: 'location',
+    sampleDbResult:
+`{
+  name: 'Warriors',
+  name: 'Raiders',
+  name: 'Athletics'
+}`,
   }
 }
 

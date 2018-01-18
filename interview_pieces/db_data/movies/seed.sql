@@ -34,8 +34,7 @@ VALUES
   (7, 'it', 'Italian'),
   (8, 'ja', 'Japanese'),
   (9, 'ko', 'Korean'),
-  (10, 'nl', 'Dutch'),
-  (11, 'xx', 'Not Applicable')
+  (10, 'nl', 'Dutch')
 ;
 
 INSERT INTO movies 
@@ -103,7 +102,25 @@ VALUES
   ('Sharing Christmas', 6, 3),
   ('Top Gun', 6.7, 3),
   ('Blade Runner 2049', 7.4, 3),
-  ('The Hitman''s Bodyguard', 6.6, 3)
+  ('The Hitman''s Bodyguard', 6.6, 3),
+  ('In a Better World', 5, 1),
+  ('Babette''s Feast', 5, 1),
+  ('Run Lola Run', 5, 2),
+  ('Toni Erdmann', 5, 2),
+  ('Y Tu Mamá Tambien', 5, 4),
+  ('Pan''s Labyrinth', 5, 4),
+  ('Amélie', 5, 5),
+  ('Blue is the Warmest Color', 5, 5),
+  ('1921', 5, 6),
+  ('Vodka Diaries', 5, 6),
+  ('Cinema Paradiso', 5, 7),
+  ('Life is Beautiful', 5, 7),
+  ('Spirited Away', 5, 8),
+  ('Princess Mononoke', 5, 8),
+  ('Train to Busan', 5, 9),
+  ('The Handmaiden', 5, 9),
+  ('The Vanishing', 5, 10),
+  ('Antonia''s Line', 5, 10)
 ;
 
 INSERT INTO movies_genres

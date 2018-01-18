@@ -5,15 +5,16 @@ INSERT INTO locations (name) VALUES
 ;
 
 INSERT INTO colors (name) VALUES
-  ('red'),
-  ('gold'),
-  ('silver'),
-  ('black'),
-  ('green'),
-  ('white'),
-  ('orange'),
-  ('cream'),
-  ('blue')
+  ('red'), -- 1
+  ('gold'), -- 2
+  ('silver'), -- 3
+  ('black'), -- 4
+  ('green'), -- 5
+  ('white'), -- 6
+  ('orange'), -- 7
+  ('cream'), -- 8
+  ('blue'), -- 9
+  ('teal') -- 10
 ;
 
 INSERT INTO teams (name, location_id, mascot) VALUES
@@ -21,7 +22,9 @@ INSERT INTO teams (name, location_id, mascot) VALUES
   ('Forty-Niners', 1, 'Sourdough Sam'),
   ('Raiders', 2, 'Raider Rusher'),
   ('Giants', 1, 'Lou Seal'),
-  ('Athletics', 2, 'Stomper')
+  ('Athletics', 2, 'Stomper'),
+  ('Sharks', 3, 'S. J. Sharkie'),
+  ('Earthquakes', 3, 'Q')
 ;
 
 INSERT INTO teams_colors (team_id, color_id) VALUES
@@ -37,5 +40,10 @@ INSERT INTO teams_colors (team_id, color_id) VALUES
   (4, 4),
   (4, 2),
   (1, 2),
-  (1, 9)
+  (1, 9),
+  (6, 10),
+  (6, 7),
+  (6, 4),
+  (7, 9),
+  (7, 4)
 ;

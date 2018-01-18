@@ -6,6 +6,7 @@ html
     link(rel='stylesheet' href='/<% endpointFilesBaseName %>.css')
   body
     h1 <% viewTitle %>
+    input(type='text' id='<% mainTableRootName %>-name' placeholder='new <% mainTableRootName %>')
     button(id='<% buttonId %>') Add <% mainTableRootName %>
     div(id='message')
       p= message
