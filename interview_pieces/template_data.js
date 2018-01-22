@@ -1,7 +1,15 @@
-const flights = {
-  common: {
-    serverRunningPhrase: 'Flying high'
-  },
+const { addCapsStrings } = require('../utilities/capitalize')
+
+const data = {
+  flights: {
+    serverRunningPhrase: 'Flying high',
+    toCaps: {
+      mainTableName: 'flight',
+    }
+  }
+}
+
+const flights = addCapsStrings(data.flights)
   a: {
     dbFuncName: 'getFlightPassengers',
     parameterName: 'flightNumber',
@@ -99,7 +107,7 @@ e: {
   flight_number: '4'
 }`,
   }
-}
+})
 
 const recipes = {
   common: {
