@@ -5,7 +5,9 @@
   "scripts": {
     "build": "node build.js"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^22.1.4"
+  },
   "dependencies": {
     "dateformat": "^3.0.2",
     "fs-extra": "^5.0.0",
