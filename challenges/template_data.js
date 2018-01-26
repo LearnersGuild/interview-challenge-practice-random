@@ -9,7 +9,7 @@ const data = {
   }
 }
 
-const flights = addCapsStrings(data.flights)
+const flights = {
   a: {
     dbFuncName: 'getFlightPassengers',
     parameterName: 'flightNumber',

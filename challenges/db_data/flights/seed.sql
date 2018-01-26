@@ -4,7 +4,7 @@ INSERT INTO airlines (name) VALUES
   ('Learners Guild Charter Flights')
 ;
 
-INSERT INTO flights (flight_number, airline_id) VALUES
+INSERT INTO flights (number, airline_id) VALUES
   ('1147A', 3),
   ('8896', 3),
   ('7', 2),
