@@ -1,11 +1,15 @@
 const path = require('path')
 const fs = require('fs')
 const { readYaml, createDir, createOutputDir } = require('../utilities/file_utilities')
+const { capitalizeFirstLetter } = require('../utilities/capitalize')
 
 // If the volume is mounted, use that. Otherwise, use random
 const MOUNTED_DRIVE = '/Volumes/INTERVIEW'
 const NONDRIVEPATH = '/var/tmp/randomInterviews'
 const DRIVEPATH = fs.existsSync(MOUNTED_DRIVE) ? MOUNTED_DRIVE : NONDRIVEPATH
+
+// Global file locations
+const SRC_ROOTDIR = path.join(__dirname, '../challenges')
 
 /**
  * Generate the random version components for parts 1, 2, 3 and database
@@ -33,11 +37,27 @@ const generateRandomVersions = () => {
  * 
  * @param {object} versions - Versions info for this challenge (as returned from generateRandomVersions)
  * @param {string} dbVersion - Version of the db for this challenge (e.g. 'flights')
+ * @param {object} dbConfigData - Configuration data for this challenge's database, from .yaml file
  * @returns {object} - Object with strings from this challenge's db for this challenge version's questions/scaffolding
  */
-const buildTemplateData = (versions, dbVersion) => {
+const buildTemplateData = (versions, dbVersion, dbConfigData) => {
   const data = {}
   const dbStrings = require(path.join(__dirname, '../challenges/db_data', dbVersion, 'strings.js'))
+
+  // table names and capitalized counterparts
+  // table names need the final 's' removed to be the "RootName"
+  dbStrings.mainTableRootName = dbConfigData.tables.main.tablename.slice(0, -1)
+  dbStrings.secondaryTableRootName = dbConfigData.tables.one.tablename.slice(0, -1)
+  dbStrings.manyTableRootName = dbConfigData.tables.many.tablename.slice(0, -1)
+  dbStrings.mainTableMainColumnName = dbConfigData.tables.main.columns[1].name
+  dbStrings.manyTableMainColumnName = dbConfigData.tables.many.columns[1].name
+
+  dbStrings.mainTableRootNameCaps = capitalizeFirstLetter(dbStrings.mainTableRootName)
+  dbStrings.secondaryTableRootNameCaps = capitalizeFirstLetter(dbStrings.secondaryTableRootName)
+  dbStrings.manyTableRootNameCaps = capitalizeFirstLetter(dbStrings.manyTableRootName)
+  dbStrings.mainTableMainColumnNameCaps = capitalizeFirstLetter(dbStrings.mainTableMainColumnName)
+  dbStrings.manyTableMainColumnNameCaps = capitalizeFirstLetter(dbStrings.manyTableMainColumnName)
+
   Array(1, 2, 3).map(partNum => {
     const stringMaker = require(path.join(__dirname, '../challenges/versions', versions[`p${partNum}`], 'template_strings'))
     data[`p${partNum}`] = stringMaker(dbStrings)
@@ -61,7 +81,7 @@ const constructPaths = (versions, destDir, data, drivePath) => {
   paths.common.dest = {}
   
   // source paths
-  paths.common.src.rootDir = path.join(__dirname, '../challenges')
+  paths.common.src.rootDir = SRC_ROOTDIR
   paths.common.src.versionsRootDir = path.join(paths.common.src.rootDir, 'versions')
   paths.common.src.commonDir = path.join(paths.common.src.versionsRootDir, '_common')
   paths.common.src.commonSrcDir = path.join(paths.common.src.commonDir, 'src')
@@ -195,17 +215,17 @@ const generateChallengeConfig = (learnerName) => {
 
   // get the randomized versions
   const versions = generateRandomVersions()
+  
+  // database config data
+  const dbConfig = readYaml(path.join(SRC_ROOTDIR, 'db_data', versions.db, `schema.yaml`))
+  dbConfig.dbName = versions.dbRandomName
+  dbConfig.dbType = versions.db
 
   // general data
-  const data = buildTemplateData(versions, versions.db)
+  const data = buildTemplateData(versions, versions.db, dbConfig)
 
   // construct the necessary paths (and create dirs as needed)
   const paths = constructPaths(versions, outputDir, data, DRIVEPATH)
-
-  // database config data
-  const dbConfig = readYaml(path.join(paths.setup.src.dataDir, `schema.yaml`))
-  dbConfig.dbName = versions.dbRandomName
-  dbConfig.dbType = versions.db
   
   return {
     data,
