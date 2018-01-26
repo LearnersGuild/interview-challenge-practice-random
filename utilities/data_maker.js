@@ -42,6 +42,8 @@ const generateRandomVersions = () => {
  */
 const buildTemplateData = (versions, dbVersion, dbConfigData) => {
   const data = {}
+
+  // get specialized strings (examples, cute phrases) for this db
   const dbStrings = require(path.join(__dirname, '../challenges/db_data', dbVersion, 'strings.js'))
 
   // table names and capitalized counterparts
@@ -58,6 +60,7 @@ const buildTemplateData = (versions, dbVersion, dbConfigData) => {
   dbStrings.mainTableMainColumnNameCaps = capitalizeFirstLetter(dbStrings.mainTableMainColumnName)
   dbStrings.manyTableMainColumnNameCaps = capitalizeFirstLetter(dbStrings.manyTableMainColumnName)
 
+  // build specific strings needed for each part for this challenge
   Array(1, 2, 3).map(partNum => {
     const stringMaker = require(path.join(__dirname, '../challenges/versions', versions[`p${partNum}`], 'template_strings'))
     data[`p${partNum}`] = stringMaker(dbStrings)

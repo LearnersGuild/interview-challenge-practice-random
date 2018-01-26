@@ -31,11 +31,5 @@ module.exports = {
   "flightNumber": "A589",
   "airlineId": 1
 }`,
-    counts:
-`{
-  id: 1, count: 3,
-  id: 2, count: 2,
-  id: 3, count: 4
-}`,
   }
 }

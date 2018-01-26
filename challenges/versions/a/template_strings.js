@@ -18,7 +18,7 @@ const stringMaker = function(dbStrings) {
   strings.endpointDescription = `${dbStrings.manyTableRootName} list`
   strings.endpointFilesBaseName = strings.endpoint
   strings.listTitle = `${dbStrings.manyTableRootNameCaps} ${dbStrings.manyTableMainColumnNameCaps}`
-  strings.exampleGetData = dbStrings.exampleData.mainTableMainColumn
+  strings.exampleGetData = dbStrings.exampleData.mainTableMainColumnUrlEncoded
 
   return Object.assign(dbStrings, strings)
 
