@@ -3,6 +3,10 @@ const fs = require('fs')
 const { readYaml, createDir, createOutputDir } = require('../utilities/file_utilities')
 const { capitalizeFirstLetter } = require('../utilities/capitalize')
 
+// Set these to null if you want random versions
+const DB = 'flights'
+const VERSION = 'a'
+
 // If the volume is mounted, use that. Otherwise, use random
 const MOUNTED_DRIVE = '/Volumes/INTERVIEW'
 const NONDRIVEPATH = '/var/tmp/randomInterviews'
@@ -10,25 +14,30 @@ const DRIVEPATH = fs.existsSync(MOUNTED_DRIVE) ? MOUNTED_DRIVE : NONDRIVEPATH
 
 // Global file locations
 const SRC_ROOTDIR = path.join(__dirname, '../challenges')
+const VERSIONS_PATH = path.join(SRC_ROOTDIR, 'versions')
+const DBDATA_PATH = path.join(SRC_ROOTDIR, 'db_data')
 
 /**
  * Generate the random version components for parts 1, 2, 3 and database
  * @returns {object} - object with the randomly generated versions
  */
 const generateRandomVersions = () => {
-  const dbs = ['flights', 'teams', 'movies', 'recipes']
+  // get all possible dbs
+  const dbs = fs.readdirSync(DBDATA_PATH)
+  const db = DB || dbs[Math.floor(Math.random()*dbs.length)]
   const randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
-  const p1 = 'a'
-  const p2 = 'a'
-  const p3 = 'a'
-  // const db = dbs[Math.floor(Math.random()*dbs.length)]
-  const db = 'flights'
-  const dbRandomName = `${db}_${randomString}`
+  const dbRandomName = `${DB}_${randomString}`
+  
+  // get all possible versions; exclude directories starting with '_'
+  const versions = fs.readdirSync(VERSIONS_PATH).filter(dir => dir[0] !== '_')
+  const p1 = VERSION || versions[Math.floor(Math.random()*versions.length)]
+  const p2 = VERSION || versions[Math.floor(Math.random()*versions.length)]
+  const p3 = VERSION || versions[Math.floor(Math.random()*versions.length)]
   return {
     p1,
     p2,
     p3,
-    db,
+    DB,
     dbRandomName,
   }
 }
@@ -62,7 +71,7 @@ const buildTemplateData = (versions, dbVersion, dbConfigData) => {
 
   // build specific strings needed for each part for this challenge
   Array(1, 2, 3).map(partNum => {
-    const stringMaker = require(path.join(__dirname, '../challenges/versions', versions[`p${partNum}`], 'template_strings'))
+    const stringMaker = require(path.join(VERSIONS_PATH, versions[`p${partNum}`], 'template_strings'))
     data[`p${partNum}`] = stringMaker(dbStrings)
   })
 
@@ -85,7 +94,7 @@ const constructPaths = (versions, destDir, data, drivePath) => {
   
   // source paths
   paths.common.src.rootDir = SRC_ROOTDIR
-  paths.common.src.versionsRootDir = path.join(paths.common.src.rootDir, 'versions')
+  paths.common.src.versionsRootDir = path.join(VERSIONS_PATH)
   paths.common.src.commonDir = path.join(paths.common.src.versionsRootDir, '_common')
   paths.common.src.commonSrcDir = path.join(paths.common.src.commonDir, 'src')
 

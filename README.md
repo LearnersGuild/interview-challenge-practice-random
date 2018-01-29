@@ -4,6 +4,19 @@
 
 ## To create an interview version for a learner
 
+1. Make sure the USB Drive is available on your computer as `/Volumes/INTERVIEW`.
+
+2. In `utilities/data_maker.js`:
+  - set `DB` and `VERSION` (just after the `require`s) to 
+    - a db name and a version letter if you want to choose those explicitly
+    - `null` if you want them to be chosen randomly
+    - it's ok to set one explicitly and let the other be random
+
+3. Run 
+  `npm run build <learner name>` where `<learner name>` is the name of the learner taking the challenge
+
+4. Voila! Everything will just show up with the learner's name on the drive. 
+
 ## To add a new interview version
 
 1. `cp -r challenges/versions/_template <new version letter>` where `<new version letter>` is the next available challenge letter not already taken in that directory (e.g. `f`)
