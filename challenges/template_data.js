@@ -259,7 +259,7 @@ const movies = {
 }`,
     p3dbFuncName: 'getLanguageNames',
     p3columnName: 'name',
-    // endpoint: 'languages',
+    endpoint: 'languages',
     endpointFilesBaseName: 'languages',
     p3itemDescription: 'movie language',
     p3viewTitle: 'Movie Languages'
