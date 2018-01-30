@@ -3,7 +3,7 @@
 Implement handling for a route/endpoint `GET /{{ p2.endpoint }}`. It should accept a query string parameter `{{ p2.parameterName }}` -- a string value representing a {{ p2.parameterDescription }}. Use the `{{ p2.dbFuncName }}` function provided in `db.js` to retrieve the list of {{ p2.dataName }}s for the specified {{ p2.parameterDescription }}. Once you have the data, render it in the templating framework of your choice (Pug or EJS).
 
 - [ ] __5:__ Route is a GET route
-- [ ] __20:__ Route accesses the `{{ p2.parameterName }}` query string parameter
-- [ ] __10:__ Route uses the provided `{{ p2.dbFuncName }}` function to retrieve the {{ p2.dataName }} data
-- [ ] __15:__ Route uses `{{ p2.endpoint }}.ejs` or `{{ p2.endpoint }}.pug` to render the list of {{ p2.dataName }}s retrieved.
+- [ ] __5:__ Route accesses the `{{ p2.parameterName }}` query string parameter
+- [ ] __5:__ Route uses `{{ p2.endpoint }}.ejs` or `{{ p2.endpoint }}.pug` to render the {{ p2.dataName }}s retrieved in an unordered list.
+- [ ] __10:__ Each {{ p2.dataName }} is in its own `<li>` element.
 - [ ] __10:__ A `GET /{{ p2.endpoint }}` request can be executed using a browser without error.
