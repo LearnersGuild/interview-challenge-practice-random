@@ -6,7 +6,12 @@ module.exports = {
 
   // example data
   exampleData: {
-    mainTableMainColumnUrlEncoded: 'Warriors'
+    mainTableMainColumnUrlEncoded: 'Warriors',
+    mainTableJsonData:
+    `{
+      "teamName": "Bad News Bears",
+      "locationId": 1
+    }`,
   },
 
   // example results
@@ -17,15 +22,10 @@ module.exports = {
   { name: 'gold' }
 ]`,
     mainTableMainColumn:
-`{
-  name: 'Warriors',
-  name: 'Raiders',
-  name: 'Athletics'
-}`,
-    mainTableRow:
-`{
-  "teamName": "Bad News Bears",
-  "locationId": 1
-}`,
+`[
+  { name: 'Warriors'},
+  { name: 'Raiders'},
+  { name: 'Athletics'}
+]`,
   }
 }

@@ -2,7 +2,13 @@
 
 ## Summary
 
+This is an app that generates a Practice Phase interview from randomly chosen interview pieces and a randomly chosen database. The possiblities are endless! (Or at least combinatorial.)
+
 ## To create an interview version for a learner
+
+0. If this is your first time working with this app: 
+  - Clone or fork the repo
+  - `npm install`
 
 1. Make sure the USB Drive is available on your computer as `/Volumes/INTERVIEW`.
   - If `/Volume/INTERVIEW` is not available, the program assumes you are simply testing, and puts the generated challenge in `/var/tmp/randomInterviews`

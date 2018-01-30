@@ -6,7 +6,12 @@ module.exports = {
 
   // example data
   exampleData: {
-    mainTableMainColumn: '1147A'
+    mainTableMainColumn: '1147A',
+    mainTableJsonData:
+    `{
+      "flightNumber": "A589",
+      "airlineId": 1
+    }`,  
   },
 
   // example results
@@ -20,16 +25,11 @@ module.exports = {
   { name: 'Scary Spice' } 
 ]`,
     mainTableMainColumn:
-`{
-  flight_number: '1147A',
-  flight_number: '8896',
-  flight_number: '8422B',
-  flight_number: '4'
-}`,
-    mainTableRow:
-`{
-  "flightNumber": "A589",
-  "airlineId": 1
-}`,
+`[
+  { number: '1147A'},
+  { number: '8896'},
+  { number: '8422B'},
+  { number: '4'}
+]`,
   }
 }

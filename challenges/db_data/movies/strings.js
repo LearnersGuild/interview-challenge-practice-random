@@ -6,7 +6,12 @@ module.exports = {
 
   // example data
   exampleData: {
-    mainTableMainColumnUrlEncoded: 'Avatar'
+    mainTableMainColumnUrlEncoded: 'Avatar',
+    mainTableJsonData:
+`{
+  "movieTitle": "Snakes on a Plane",
+  "languageId": 1
+}`,
   },
 
   // example results
@@ -18,14 +23,9 @@ module.exports = {
   { name: 'Comedy' }
 ]`,
     mainTableMainColumn:
-`{
-  title: 'In a Better World',
-  title: 'Babette\'s Feast',
-}`,
-    mainTableRow:
-`{
-  "movieTitle": "Snakes on a Plane",
-  "languageId": 1
-}`,
+`[
+  { title: 'In a Better World'},
+  { title: 'Babette\'s Feast'}
+]`,
   }
 }

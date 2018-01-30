@@ -6,7 +6,12 @@ module.exports = {
 
   // example data
   exampleData: {
-    mainTableMainColumnUrlEncoded: 'chocolate%20chip%20cookies'
+    mainTableMainColumnUrlEncoded: 'chocolate%20chip%20cookies',
+    mainTableJsonData:
+`{
+  "recipeName": "Pineapple Upside-Down Cake",
+  "typeId": 1
+}`, 
   },
 
   // example results
@@ -24,14 +29,9 @@ module.exports = {
   { name: 'vanilla extract' }
 ]`,
     mainTableMainColumn:
-`{
-  name: 'chocolate chip cookies',
-  name: 'peanut butter cookies'
-}`,
-    mainTableRow:
-`{
-  "recipeName": "Pineapple Upside-Down Cake",
-  "typeId": 1
-}`,
+`[
+  { name: 'chocolate chip cookies'},
+  { name: 'peanut butter cookies'}
+]`,
   }
 }
