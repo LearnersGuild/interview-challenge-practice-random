@@ -33,5 +33,12 @@ module.exports = {
   { name: 'chocolate chip cookies'},
   { name: 'peanut butter cookies'}
 ]`,
+  mainTableWithSecondary:
+`[
+  {'name': 'chocolate chip cookies', language_name: 'Cookies'},
+  {'name': 'pound cake', language_name: 'cake'},
+  {'name': 'chocolate brownies', language_name: 'bars'},
+  {'name': 'chocolate cake', language_name: 'cake'}
+]`
   }
 }

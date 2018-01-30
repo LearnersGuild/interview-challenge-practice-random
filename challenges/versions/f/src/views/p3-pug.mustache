@@ -5,7 +5,8 @@ html
     title Practice Phase Challenge Part 3
     link(rel='stylesheet' href='/<% endpoint %>.css')
   body
-    h1 <% mainTableRootName %>
+    h1 <% mainTableRootNameCaps %>s
+    input(id="monster-<% secondaryTableRootName %>")
     button(id=<% buttonId %>) <% buttonText %>
     table(class="<% endpoint %>")
       thead
@@ -14,7 +15,7 @@ html
           th <% secondaryTableRootName %> <% secondaryTableMainColumnName %>
       tbody
         - if (typeof(<% mainTableRootName %>s) !== 'undefined') {
-          each <% mainTableRootName %> of <% mainTableRootName %>s
+          each <% mainTableRootName %> in <% mainTableRootName %>s
             tr(class="<% endpoint %>")
               td(class="<% mainTableMainColumnName %>")= <% mainTableRootName %>.<% mainTableMainColumnName %>
               td(class="<% secondaryFieldName %>")= <% mainTableRootName %>.<% secondaryFieldName %>

@@ -27,5 +27,12 @@ module.exports = {
   { title: 'In a Better World'},
   { title: 'Babette\'s Feast'}
 ]`,
+mainTableWithSecondary:
+`[
+  {'title': 'True Grit', language_name: 'English'},
+  {'title': 'Psycho', language_name: 'English'},
+  {'title': 'Wedding Wonderland', language_name: 'English'},
+  {'title': 'Spirited Away', language_name: 'Japanese'}
+]`
   }
 }

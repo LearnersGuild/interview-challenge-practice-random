@@ -15,8 +15,8 @@ module.exports = {
   },
 
   // example results
-    exampleResults: {
-      manyTableMainColumn:
+  exampleResults: {
+    manyTableMainColumn:
 `[ 
   { name: 'Michael Jackson' },
   { name: 'Tito Jackson' },
@@ -31,5 +31,16 @@ module.exports = {
   { number: '8422B'},
   { number: '4'}
 ]`,
+    mainTableWithSecondary:
+`[
+  1147A  | Learners Guild Charter Flights
+  { 'number': '8896', 'airline_name': 'Learners Guild Charter Flights' },
+  { 'number': '7', 'airline_name': 'Busy Bee Air' },
+  { 'number': '8422B', 'airline_name': 'Learners Guild Charter Flights' },
+  { 'number': '232', 'airline_name': 'Fly Right Airlines' },
+  { 'number': '432', 'airline_name': 'Fly Right Airlines' },
+  { 'number': '9007', 'airline_name': 'Busy Bee Air' },
+  { 'number': '4', 'airline_name': 'Learners Guild Charter Flights' }
+]`
   }
 }
