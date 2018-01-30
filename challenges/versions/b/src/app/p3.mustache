@@ -4,12 +4,11 @@
 app.get('/<%endpoint %>', (req, res) => {
   <% p3dbFuncName %>()
     .then((<% secondaryTableRootName %>s) => {
-      res.render('<% endpoint %>', { <% secondaryTableRootName %>s });
+      res.render('<% endpointFilesBaseName %>', { <% secondaryTableRootName %>s });
     })
     .catch((err) => {
-      res.render('<% endpoint %>', { message: `An error occurred: ${err.toString()}` });
+      res.render('<% endpointFilesBaseName %>', { message: `An error occurred: ${err.toString()}` });
     })
-    .catch(console.error);
 });
 
 <% >appStart %>

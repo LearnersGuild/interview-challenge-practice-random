@@ -14,13 +14,13 @@ const stringMaker = function(dbStrings) {
   strings.parameter2Description = `${dbStrings.secondaryTableRootName} id`
   strings.parameter1ColumnName = dbStrings.mainTableMainColumnName
   strings.sampleDbResult = '{ id: 4 }'
-  strings.postEndpoint = `${dbStrings.mainTableRootName}s/add`
-  strings.examplePostData = dbStrings.exampleData.mainTableRow
+  strings.postEndpoint = `/${dbStrings.mainTableRootName}s/add`
+  strings.examplePostData = dbStrings.exampleResults.mainTableRow
   strings.p3dbFuncName = `get${dbStrings.secondaryTableRootNameCaps}${dbStrings.secondaryTableMainColumnNameCaps}s`
-  strings.p3columnName = dbStrings.secondaryTableMainColumnNameCaps
-  strings.endpoint = `${dbStrings.secondaryTableRootName}s`
+  strings.p3columnName = dbStrings.secondaryTableMainColumnName
+  strings.endpoint = `${dbStrings.secondaryTableRootName}s` // leave off initial slash as it's too painful to un-encode in mustache
   strings.endpointFilesBaseName = `${dbStrings.secondaryTableRootName}s`
-  strings.p3itemDescription = dbStrings.secondaryTableRootName
+  strings.p3itemDescription = `${dbStrings.secondaryTableRootName} ${dbStrings.secondaryTableMainColumnName}`
   strings.p3viewTitle = `${dbStrings.secondaryTableRootNameCaps}s`
 
   return Object.assign(dbStrings, strings)

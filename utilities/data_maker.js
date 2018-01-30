@@ -4,8 +4,8 @@ const { readYaml, createDir, createOutputDir } = require('../utilities/file_util
 const { capitalizeFirstLetter } = require('../utilities/capitalize')
 
 // Set these to null if you want random versions
-const DB = 'flights'
-const VERSION = 'a'
+const DB = 'movies'
+const VERSION = 'b'
 
 // If the volume is mounted, use that. Otherwise, use random
 const MOUNTED_DRIVE = '/Volumes/INTERVIEW'
@@ -37,7 +37,7 @@ const generateRandomVersions = () => {
     p1,
     p2,
     p3,
-    DB,
+    db: DB,
     dbRandomName,
   }
 }
@@ -62,12 +62,14 @@ const buildTemplateData = (versions, dbVersion, dbConfigData) => {
   dbStrings.manyTableRootName = dbConfigData.tables.many.tablename.slice(0, -1)
   dbStrings.mainTableMainColumnName = dbConfigData.tables.main.columns[1].name
   dbStrings.manyTableMainColumnName = dbConfigData.tables.many.columns[1].name
+  dbStrings.secondaryTableMainColumnName = dbConfigData.tables.one.columns[1].name
 
   dbStrings.mainTableRootNameCaps = capitalizeFirstLetter(dbStrings.mainTableRootName)
   dbStrings.secondaryTableRootNameCaps = capitalizeFirstLetter(dbStrings.secondaryTableRootName)
   dbStrings.manyTableRootNameCaps = capitalizeFirstLetter(dbStrings.manyTableRootName)
   dbStrings.mainTableMainColumnNameCaps = capitalizeFirstLetter(dbStrings.mainTableMainColumnName)
   dbStrings.manyTableMainColumnNameCaps = capitalizeFirstLetter(dbStrings.manyTableMainColumnName)
+  dbStrings.secondaryTableMainColumnNameCaps = capitalizeFirstLetter(dbStrings.secondaryTableMainColumnName)
 
   // build specific strings needed for each part for this challenge
   Array(1, 2, 3).map(partNum => {
