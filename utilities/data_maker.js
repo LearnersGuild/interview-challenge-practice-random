@@ -4,8 +4,8 @@ const { readYaml, createDir, createOutputDir } = require('../utilities/file_util
 const { capitalizeFirstLetter } = require('../utilities/capitalize')
 
 // Set these to null if you want random versions
-const DB = 'recipes'
-const VERSION = 'c'
+const DB = 'teams'
+const VERSION = 'f'
 
 // If the volume is mounted, use that. Otherwise, use random
 const MOUNTED_DRIVE = '/Volumes/INTERVIEW'

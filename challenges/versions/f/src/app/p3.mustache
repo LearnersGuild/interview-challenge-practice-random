@@ -1,0 +1,15 @@
+{{=<% %>=}}
+<% >defineAppAndView %>
+
+// JSDoc for <%dbFuncName %>
+<% >jsDoc%>
+
+app.get('/<%endpoint %>', (req, res) => {
+  <% dbFuncName %>()
+    .then((<% mainTableRootName %>s) => {
+      res.render('<% endpoint %>', { <% mainTableRootName %>s })
+    })
+    .catch(console.error)
+});
+
+<% >appStart %>

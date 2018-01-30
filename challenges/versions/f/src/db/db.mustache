@@ -1,0 +1,20 @@
+{{> dbConnection}}
+
+{{> jsDoc}}
+
+const {{ dbFuncName }} = () => {
+  const query = `
+  SELECT 
+    {{ mainTableRootName }}s.{{ mainTableMainColumnName }}, 
+    {{ secondaryTableRootName }}s.{{ secondaryTableMainColumnName }} AS {{ secondaryFieldName }}
+  FROM {{ mainTableRootName }}s
+    JOIN {{ secondaryTableRootName }}s
+    ON {{ mainTableRootName }}s.{{ secondaryTableRootName }}_id = {{ secondaryTableRootName }}s.id
+  ORDER BY {{ mainTableRootName }}s.{{ mainTableMainColumnName }}
+  `
+  return db.any(query)
+}
+
+module.exports = {
+  {{ dbFuncName }},
+}

@@ -1,0 +1,24 @@
+{{=<% %>=}}
+
+html
+  head
+    title Practice Phase Challenge Part 3
+    link(rel='stylesheet' href='/<% endpoint %>.css')
+  body
+    h1 <% mainTableRootName %>
+    button(id=<% buttonId %>) <% buttonText %>
+    table(class="<% endpoint %>")
+      thead
+        tr
+          th <% mainTableRootName %> <% mainTableMainColumnName %>
+          th <% secondaryTableRootName %> <% secondaryTableMainColumnName %>
+      tbody
+        - if (typeof(<% mainTableRootName %>s) !== 'undefined') {
+          each <% mainTableRootName %> of <% mainTableRootName %>s
+            tr(class="<% endpoint %>")
+              td(class="<% mainTableMainColumnName %>")= <% mainTableRootName %>.<% mainTableMainColumnName %>
+              td(class="<% secondaryFieldName %>")= <% mainTableRootName %>.<% secondaryFieldName %>
+        - }
+    script(src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous")
+    script(src="/<% endpoint %>.js")

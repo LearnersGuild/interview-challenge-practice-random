@@ -3,6 +3,7 @@ module.exports = {
   serverRunningPhrase: 'Playing ball',
   removeButtonText: 'Remove color',
   removeButtonId: 'erase-the-rainbow',
+  
 
   // example data
   exampleData: {
@@ -15,8 +16,8 @@ module.exports = {
   },
 
   // example results
-    exampleResults: {
-      manyTableMainColumn:
+  exampleResults: {
+    manyTableMainColumn:
 `[
   { name: 'blue' },
   { name: 'gold' }
@@ -27,5 +28,13 @@ module.exports = {
   { name: 'Raiders'},
   { name: 'Athletics'}
 ]`,
+    mainTableWithSecondary:
+`[
+  {'name': 'Warriors', location_name: 'Oakland'},
+  {'name': 'Giants', location_name: 'San Francisco'},
+  {'name': 'Athletics', location_name: 'Oakland'},
+  {'name': 'Sharks', location_name: 'San Jose'}
+]
+`
   }
 }

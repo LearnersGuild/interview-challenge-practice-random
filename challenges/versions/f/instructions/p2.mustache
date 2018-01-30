@@ -1,0 +1,9 @@
+##### GET route
+
+Implement handling for a route/endpoint `GET /{{ p2.endpoint }}`. Use the `{{ p2.dbFuncName }}` function provided in `db.js` to retrieve the list of {{ p2.mainTableRootName }}s in the database, with their associated {{ p2.secondaryFieldDescription }}. Once you have the data, render it in the templating framework of your choice (Pug or EJS).
+
+- [ ] __5:__ Route is a GET route
+- [ ] __5:__ Route uses `{{ p2.endpoint }}.ejs` or `{{ p2.endpoint }}.pug` to render an unordered list.
+- [ ] __10:__ There is one `<li>` element for each {{ p2.mainTableRootName }} within the unordered list.
+- [ ] __15:__ Each `<li>` element contains both the {{ p2.mainTableMainColumnName }} and the {{ p2.secondaryFieldDescription }} for the flight. 
+- [ ] __5:__ A `GET /{{ p2.endpoint }}` request can be executed using a browser without error.

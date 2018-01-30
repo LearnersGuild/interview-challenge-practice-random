@@ -4,7 +4,7 @@
 
 This is an app that generates a Practice Phase interview from randomly chosen interview pieces and a randomly chosen database. The possiblities are endless! (Or at least combinatorial.)
 
-## To create an interview version for a learner
+## To generate a challenge for a learner
 
 0. If this is your first time working with this app: 
    - Clone or fork the repo
@@ -26,14 +26,17 @@ This is an app that generates a Practice Phase interview from randomly chosen in
 
 ## To add a new interview version
 
-1. `cp -r challenges/versions/_template <new version letter>` where `<new version letter>` is the next available challenge letter not already taken in that directory (e.g. `f`)
+1. Copy the file structure template
+   - `$ cd challenges/versions/`
+   - `$ cp -r _template <new version letter>` 
+      (where `<new version letter>` is the next available challenge letter not already taken in that directory (e.g. `f`))
 
 2. Inside the new directory, there will be:
    - A `template_strings.js` file
    - An `instructions` directory
    - A `src` directory
 
-3. In the `template_strings.js` file, fill out the `string_maker` function
+3. In the `template_strings.js` file, fill out the `string_maker` function (note: You will probably do steps 3, 4, and 5 at the same time, switching back and forth as needed.)
    - See the `template_strings.js` file in the `a` directory for an example
    - This function should generate strings needed for the challenge (for example, the database function name)
    - The strings should be composed of strings that come from: 
