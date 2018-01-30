@@ -1,0 +1,67 @@
+# Foundations -> Practice Challenge
+
+## Introduction
+
+This document contains the requirements for completing your interview challenge as well as instructions for setup and teardown. Read the following content carefully!
+
+### Setup
+
+First, we'll need to navigate to the directory on the interview USB drive where the challenge files are. On a mac, you'll find it here:
+
+```sh
+cd "{{{ outputDir }}}"
+```
+
+Next, we need to setup the challenge. You can do so by simply running a script:
+
+```sh
+cd setup && npm run setup && cd ..
+```
+
+## The Interview Challenge
+
+This challenge has three parts:
+
+{{> partDescriptions }}
+
+### Part 1: SQL
+
+#### PostgreSQL, Node.js, & pg-promise
+
+#### ER Diagram
+
+An ER diagram has been provided that visualizes the database schema:
+
+![ER Diagram](/part-1/{{ dbType }}_ERD.png)
+
+{{> part-1}}
+
+### Part 2: Express
+
+#### Starting the server
+
+To start the server, run: `npm start`.
+
+{{> part-2}}
+
+### Part 3: Front-End
+
+#### Starting the server
+
+To start the server, run: `npm start`.
+
+{{> part-3}}
+
+## Teardown
+
+Let's do a little cleanup:
+
+1. End the video recording (if applicable)
+2. From your terminal, stop any running express servers
+3. From your terminal, `cd` out of the usb drive directory
+4. Close any browser windows pertaining to the challenge
+5. Drop the database (`dropdb {{ dbName }}`)
+6. Copy the command from the #8 below to the clipboard, and memorize or write down the final two instructions.
+7. Quit your text editor application
+8. Eject the USB drive (`diskutil unmount {{{ drivePath }}}`)
+9. Quit your terminal application

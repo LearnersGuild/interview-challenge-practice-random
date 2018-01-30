@@ -1,26 +1,83 @@
 const path = require('path')
+const fs = require('fs')
 const { readYaml, createDir, createOutputDir } = require('../utilities/file_utilities')
+const { capitalizeFirstLetter } = require('../utilities/capitalize')
+
+// Set these to null if you want random versions
+const DB = 'recipes'
+const VERSION = 'c'
+
+// If the volume is mounted, use that. Otherwise, use random
+const MOUNTED_DRIVE = '/Volumes/INTERVIEW'
+const NONDRIVEPATH = '/var/tmp/randomInterviews'
+const DRIVEPATH = fs.existsSync(MOUNTED_DRIVE) ? MOUNTED_DRIVE : NONDRIVEPATH
+
+// Global file locations
+const SRC_ROOTDIR = path.join(__dirname, '../challenges')
+const VERSIONS_PATH = path.join(SRC_ROOTDIR, 'versions')
+const DBDATA_PATH = path.join(SRC_ROOTDIR, 'db_data')
 
 /**
  * Generate the random version components for parts 1, 2, 3 and database
  * @returns {object} - object with the randomly generated versions
  */
 const generateRandomVersions = () => {
-  const dbs = ['flights', 'teams', 'movies', 'recipes']
+  // get all possible dbs
+  const dbs = fs.readdirSync(DBDATA_PATH)
+  const db = DB || dbs[Math.floor(Math.random()*dbs.length)]
   const randomString = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
-  const p1 = 'c'
-  const p2 = 'c'
-  const p3 = 'c'
-  // const db = dbs[Math.floor(Math.random()*dbs.length)]
-  const db = 'movies'
-  const dbRandomName = `${db}_${randomString}`
+  const dbRandomName = `${DB}_${randomString}`
+  
+  // get all possible versions; exclude directories starting with '_'
+  const versions = fs.readdirSync(VERSIONS_PATH).filter(dir => dir[0] !== '_')
+  const p1 = VERSION || versions[Math.floor(Math.random()*versions.length)]
+  const p2 = VERSION || versions[Math.floor(Math.random()*versions.length)]
+  const p3 = VERSION || versions[Math.floor(Math.random()*versions.length)]
   return {
     p1,
     p2,
     p3,
-    db,
+    db: DB,
     dbRandomName,
   }
+}
+
+/**
+ * 
+ * @param {object} versions - Versions info for this challenge (as returned from generateRandomVersions)
+ * @param {string} dbVersion - Version of the db for this challenge (e.g. 'flights')
+ * @param {object} dbConfigData - Configuration data for this challenge's database, from .yaml file
+ * @returns {object} - Object with strings from this challenge's db for this challenge version's questions/scaffolding
+ */
+const buildTemplateData = (versions, dbVersion, dbConfigData) => {
+  const data = {}
+
+  // get specialized strings (examples, cute phrases) for this db
+  const dbStrings = require(path.join(__dirname, '../challenges/db_data', dbVersion, 'strings.js'))
+
+  // table names and capitalized counterparts
+  // table names need the final 's' removed to be the "RootName"
+  dbStrings.mainTableRootName = dbConfigData.tables.main.tablename.slice(0, -1)
+  dbStrings.secondaryTableRootName = dbConfigData.tables.one.tablename.slice(0, -1)
+  dbStrings.manyTableRootName = dbConfigData.tables.many.tablename.slice(0, -1)
+  dbStrings.mainTableMainColumnName = dbConfigData.tables.main.columns[1].name
+  dbStrings.manyTableMainColumnName = dbConfigData.tables.many.columns[1].name
+  dbStrings.secondaryTableMainColumnName = dbConfigData.tables.one.columns[1].name
+
+  dbStrings.mainTableRootNameCaps = capitalizeFirstLetter(dbStrings.mainTableRootName)
+  dbStrings.secondaryTableRootNameCaps = capitalizeFirstLetter(dbStrings.secondaryTableRootName)
+  dbStrings.manyTableRootNameCaps = capitalizeFirstLetter(dbStrings.manyTableRootName)
+  dbStrings.mainTableMainColumnNameCaps = capitalizeFirstLetter(dbStrings.mainTableMainColumnName)
+  dbStrings.manyTableMainColumnNameCaps = capitalizeFirstLetter(dbStrings.manyTableMainColumnName)
+  dbStrings.secondaryTableMainColumnNameCaps = capitalizeFirstLetter(dbStrings.secondaryTableMainColumnName)
+
+  // build specific strings needed for each part for this challenge
+  Array(1, 2, 3).map(partNum => {
+    const stringMaker = require(path.join(VERSIONS_PATH, versions[`p${partNum}`], 'template_strings'))
+    data[`p${partNum}`] = stringMaker(dbStrings)
+  })
+
+  return data
 }
 
 /**
@@ -38,8 +95,10 @@ const constructPaths = (versions, destDir, data, drivePath) => {
   paths.common.dest = {}
   
   // source paths
-  paths.common.src.rootDir = path.join(__dirname, '../interview_pieces')
-  paths.common.src.codeDir = path.join(paths.common.src.rootDir, 'code')
+  paths.common.src.rootDir = SRC_ROOTDIR
+  paths.common.src.versionsRootDir = path.join(VERSIONS_PATH)
+  paths.common.src.commonDir = path.join(paths.common.src.versionsRootDir, '_common')
+  paths.common.src.commonSrcDir = path.join(paths.common.src.commonDir, 'src')
 
   // for consistency, store drivePath and root destination dir here
   paths.common.dest.drivePath = drivePath
@@ -49,7 +108,7 @@ const constructPaths = (versions, destDir, data, drivePath) => {
   paths.setup = {}
   paths.setup.src = {}
   paths.setup.dest = {}
-  paths.setup.src.setupDir = path.join(paths.common.src.codeDir, 'setup')
+  paths.setup.src.setupDir = path.join(paths.common.src.commonSrcDir, 'setup')
   paths.setup.src.packageTemplate = path.join(paths.setup.src.setupDir, 'package_json.mustache')
   paths.setup.dest.rootDir = path.join(paths.common.dest.rootDir, 'setup')
   paths.setup.dest.setupPackageFile = path.join(paths.setup.dest.rootDir, 'package.json')
@@ -66,23 +125,17 @@ const constructPaths = (versions, destDir, data, drivePath) => {
   paths.readme = {}
   paths.readme.src = {}
   paths.readme.dest = {}
-  paths.readme.src.rootDir = path.join(paths.common.src.rootDir, 'instructions')
-  paths.readme.src.readmeTemplate = path.join(paths.readme.src.rootDir, 'README.mustache')
-  paths.readme.src.p1Template = path.join(paths.readme.src.rootDir, `p1-${versions.p1}.mustache`)
-  paths.readme.src.p2Template = path.join(paths.readme.src.rootDir, `p2-${versions.p2}.mustache`)
-  paths.readme.src.p3Template = path.join(paths.readme.src.rootDir, `p3-${versions.p3}.mustache`)
+  paths.readme.src.readmeTemplate = path.join(paths.common.src.commonDir, 'instructions/README.mustache')
   paths.readme.dest.readmeFile = path.join(paths.common.dest.rootDir, 'README.md')
 
   // erd files
-  const erdFileName = `${versions.db}_ERD.png`
-  paths.readme.src.erdFile = path.join(paths.setup.src.dataDir, erdFileName)
-  paths.readme.dest.erdFile = path.join(paths.common.dest.rootDir, 'part-1', erdFileName)
+  paths.readme.src.erdFile = path.join(paths.setup.src.dataDir, 'ERD.png')
+  paths.readme.dest.erdFile = path.join(paths.common.dest.rootDir, 'part-1', `${versions.db}_ERD.png`)
   
   // app.js common files
   paths.appJs = {}
   paths.appJs.src = {}
-  paths.appJs.src.rootDir = path.join(paths.common.src.codeDir, 'app')
-  paths.appJs.src.commonDir = path.join(paths.appJs.src.rootDir, 'common')
+  paths.appJs.src.commonDir = path.join(paths.common.src.commonSrcDir, 'app')
   paths.appJs.src.appStartTemplate = path.join(paths.appJs.src.commonDir, 'app_start.mustache')
   paths.appJs.src.defineAppAndViewTemplate = path.join(paths.appJs.src.commonDir, 'define_app_and_views.mustache')
   paths.appJs.src.p2appJs = path.join(paths.appJs.src.commonDir, 'p2-app.mustache')
@@ -90,18 +143,24 @@ const constructPaths = (versions, destDir, data, drivePath) => {
   // db.js common files
   paths.dbJs = {}
   paths.dbJs.src = {}
-  paths.dbJs.src.rootDir = path.join(paths.common.src.codeDir, 'db')
-  paths.dbJs.src.commonDir = path.join(paths.dbJs.src.rootDir, 'common')
+  paths.dbJs.src.commonDir = path.join(paths.common.src.commonSrcDir, 'db')
   paths.dbJs.src.dbJsConnectionTemplate = path.join(paths.dbJs.src.commonDir, 'db_connection.mustache')
-
+  
   // construct paths for part-specific directory paths, and create the destination directories
   Array(1, 2, 3).forEach(partNum => {
     const p = {}
     p.src = {}
     p.dest = {}
     
+    // basic dirs
+    p.src.versionDir = path.join(paths.common.src.versionsRootDir, versions[`p${partNum}`])
+    p.src.codeDir = path.join(p.src.versionDir, 'src')
+
+    // instructions
+    paths.readme.src[`p${partNum}Template`] = path.join(paths.common.src.versionsRootDir, versions[`p${partNum}`], `instructions/p${partNum}.mustache`)
+
     // used in destination filenames
-    const endpointFilesBaseName = data[versions.db][versions[`p${partNum}`]].endpointFilesBaseName
+    const endpointFilesBaseName = data[`p${partNum}`].endpointFilesBaseName
     
     // top level destination part directory
     const partDir = `part-${partNum}`
@@ -109,11 +168,11 @@ const constructPaths = (versions, destDir, data, drivePath) => {
     createDir(p.dest.rootDir)
     
     // package.json paths
-    p.src.packageFile = path.join(paths.common.src.codeDir, 'package_json', `p${partNum}-package.json`)
+    p.src.packageFile = path.join(paths.common.src.commonDir, 'package_json', `p${partNum}.json`)
     p.dest.packageFile = path.join(p.dest.rootDir, 'package.json')
     
     // db.js paths
-    p.src.dbJsDir = path.join(paths.dbJs.src.rootDir, versions[`p${partNum}`])
+    p.src.dbJsDir = path.join(p.src.codeDir, 'db')
     p.src.dbJsTemplate = path.join(p.src.dbJsDir, 'db.mustache')
     p.src.jsDocTemplate = path.join(p.src.dbJsDir, 'jsDoc.mustache')
     p.dest.dbJsDir = path.join(p.dest.rootDir, 'db')
@@ -124,14 +183,14 @@ const constructPaths = (versions, destDir, data, drivePath) => {
       // app.js is version-independent for p2
       p.src.appJsTemplate = paths.appJs.src.p2appJs
     } else {
-      p.src.appJsDir = path.join(paths.appJs.src.rootDir, versions[`p${partNum}`])
-      p.src.appJsTemplate = path.join(p.src.appJsDir, `p${partNum}-app.mustache`)
+      p.src.appJsDir = path.join(p.src.codeDir, 'app')
+      p.src.appJsTemplate = path.join(p.src.appJsDir, `p${partNum}.mustache`)
     }
     p.dest.appJsFile = path.join(p.dest.rootDir, 'app.js')
 
     // views file paths
     if (partNum > 1) {
-      p.src.viewsDir = path.join(paths.common.src.codeDir, 'views', versions[`p${partNum}`])
+      p.src.viewsDir = path.join(p.src.codeDir, 'views')
       p.src.pugTemplate = path.join(p.src.viewsDir, `p${partNum}-pug.mustache`)
       p.src.ejsTemplate = path.join(p.src.viewsDir, `p${partNum}-ejs.mustache`)
       p.dest.viewsDir = path.join(p.dest.rootDir, 'views')
@@ -142,7 +201,7 @@ const constructPaths = (versions, destDir, data, drivePath) => {
 
     // public file paths
     if (partNum > 2) {
-      p.src.publicDir = path.join(paths.common.src.codeDir, 'public', versions[`p${partNum}`])
+      p.src.publicDir = path.join(p.src.codeDir, 'public')
       p.src.cssTemplate = path.join(p.src.publicDir, `p${partNum}-css.mustache`)
       p.src.jsTemplate = path.join(p.src.publicDir, `p${partNum}-js.mustache`)
       p.dest.publicDir = path.join(p.dest.rootDir, 'public')
@@ -166,28 +225,21 @@ const constructPaths = (versions, destDir, data, drivePath) => {
  * @returns {object} - Object containing data for the random version
  */
 const generateChallengeConfig = (learnerName) => {
-  // const drivePath = '/Volumes/INTERVIEW'
-  const drivePath = '/var/tmp/randomInterviews'
-  const outputDir = createOutputDir(drivePath, learnerName)
+  const outputDir = createOutputDir(DRIVEPATH, learnerName)
 
   // get the randomized versions
   const versions = generateRandomVersions()
-
-  // general data
-  const templateData = require(path.join(__dirname, '../interview_pieces/template_data'))
-  const data = {
-    p1: Object.assign (templateData[versions.db][versions.p1], templateData[versions.db].common),
-    p2: Object.assign (templateData[versions.db][versions.p2], templateData[versions.db].common),
-    p3: Object.assign (templateData[versions.db][versions.p3], templateData[versions.db].common),
-  }
-
-  // construct the necessary paths (and create dirs as needed)
-  const paths = constructPaths(versions, outputDir, templateData, drivePath)
-
+  
   // database config data
-  const dbConfig = readYaml(path.join(paths.setup.src.dataDir, `${versions.db}.yaml`))
+  const dbConfig = readYaml(path.join(SRC_ROOTDIR, 'db_data', versions.db, `schema.yaml`))
   dbConfig.dbName = versions.dbRandomName
   dbConfig.dbType = versions.db
+
+  // general data
+  const data = buildTemplateData(versions, versions.db, dbConfig)
+
+  // construct the necessary paths (and create dirs as needed)
+  const paths = constructPaths(versions, outputDir, data, DRIVEPATH)
   
   return {
     data,

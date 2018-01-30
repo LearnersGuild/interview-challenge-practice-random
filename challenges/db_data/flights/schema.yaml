@@ -1,0 +1,44 @@
+%YAML 1.2
+---
+tables:
+  one:
+    tablename: airlines
+    columns:
+      - name: id
+        type: SERIAL
+        options: PRIMARY KEY
+      - name: name
+        type: VARCHAR(64)
+        options: UNIQUE 
+  main:
+    tablename: flights
+    columns:
+      - name: id
+        type: SERIAL
+        options: PRIMARY KEY
+      - name: number
+        type: VARCHAR(8)
+      - name: airline_id
+        type: INTEGER
+        options: REFERENCES airlines
+  many:
+    tablename: passengers
+    columns:
+      - name: id
+        type: SERIAL
+        options: PRIMARY KEY
+      - name: name
+        type: VARCHAR(64)
+        options: UNIQUE
+  join:
+    tablename: flights_passengers
+    columns:
+      - name: id
+        type: SERIAL
+        options: PRIMARY KEY
+      - name: flight_id
+        type: INTEGER
+        options: REFERENCES flights
+      - name: passenger_id
+        type: INTEGER
+        options: REFERENCES passengers
