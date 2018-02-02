@@ -1,6 +1,6 @@
 ##### GET route
 
-Implement handling for a route/endpoint `GET /{{ p2.endpoint }}`. Use the `{{ p2.dbFuncName }}` function provided in `db.js` to retrieve the list of {{ p2.mainTableRootName }}s in the database, with their associated {{ p2.secondaryFieldDescription }}. Once you have the data, render it in the templating framework of your choice (Pug or EJS).
+In `app.js`, implement handling for a route/endpoint `GET /{{ p2.endpoint }}`. Use the `{{ p2.dbFuncName }}` function provided in `db.js` to retrieve the list of {{ p2.mainTableRootName }}s in the database, with their associated {{ p2.secondaryFieldDescription }}. Once you have the data, select a template engine in `app.js` and render the data in the templating framework of your choice (Pug or EJS).
 
 - [ ] __5:__ Route is a GET route
 - [ ] __5:__ Route uses `{{ p2.endpoint }}.ejs` or `{{ p2.endpoint }}.pug` to render an unordered list.

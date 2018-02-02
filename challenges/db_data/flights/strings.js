@@ -33,7 +33,6 @@ module.exports = {
 ]`,
     mainTableWithSecondary:
 `[
-  1147A  | Learners Guild Charter Flights
   { 'number': '8896', 'airline_name': 'Learners Guild Charter Flights' },
   { 'number': '7', 'airline_name': 'Busy Bee Air' },
   { 'number': '8422B', 'airline_name': 'Learners Guild Charter Flights' },
