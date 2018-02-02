@@ -11,4 +11,5 @@ Sample result:
 - [ ] __5:__ The function executes a SQL query using `pg-promise`
 - [ ] __5:__ The function returns a promise which resolves to the result of the query.
 - [ ] __5:__ The query results in one one row for each {{ p1.mainTableRootName }} in the database.
-- [ ] __20:__ The result set of the SQL query includes one row for every {{ p1.mainTableRootName }} in the database, each row containing a `{{ p1.mainTableMainColumnName }}` field and a `{{ p1.secondaryFieldName }}` field.
+- [ ] __15:__ The result set of the SQL query includes the {{ p1.mainTableRootName }} {{ p1.mainTableMainColumnName }} and the {{ p1.secondaryFieldDescription }} for every {{ p1.mainTableRootName }} in the database.
+- [ ] __5:__ Each row contains a field named `{{ p1.mainTableMainColumnName }}` a field named `{{ p1.secondaryFieldName }}`.
